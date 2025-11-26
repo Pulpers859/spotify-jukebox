@@ -9,222 +9,222 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
-    :root {
-      --bg-gradient: linear-gradient(
-        135deg,
-        #ff9a9e 0%,
-        #fad0c4 25%,
-        #fbc2eb 50%,
-        #a18cd1 75%,
-        #84fab0 100%
-      );
-      --card-bg: rgba(7, 5, 22, 0.78);
-      --accent: #fffdff;
-      --accent-soft: rgba(255, 255, 255, 0.8);
-      --accent-strong: #ffe66d;
-      --shadow-neon: 0 0 20px rgba(255, 255, 255, 0.35),
-                      0 0 40px rgba(137, 96, 255, 0.6);
-    }
+  :root {
+    --bg-gradient: radial-gradient(circle at top left, #fef3e2 0%, #f8e1c4 40%, #f5d0c5 75%, #f2c9b4 100%);
+    --card-bg: rgba(255, 255, 255, 0.9);
+    --accent: #4a3428;
+    --accent-soft: #7b5b46;
+    --accent-strong: #c47a4e;
+    --shadow-soft: 0 14px 35px rgba(112, 72, 40, 0.28);
+  }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 
-    html, body {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      font-family: "Syne", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-    }
+  html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
 
-    body {
-      background-image: var(--bg-gradient);
-      background-size: 400% 400%;
-      color: var(--accent);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 3vh 3vw;
-    }
+  body {
+    background-image: var(--bg-gradient);
+    background-size: cover;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3vh 3vw;
+  }
 
+  .frame {
+    width: 100%;
+    max-width: 1100px;
+    height: 100%;
+    max-height: 650px;
+    background: var(--card-bg);
+    border-radius: 30px;
+    box-shadow: var(--shadow-soft);
+    padding: 3vh 3vw;
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
+    grid-template-rows: auto 1fr auto;
+    gap: 2vh 3vw;
+    border: 1px solid rgba(195, 167, 137, 0.45);
+  }
+
+  .header {
+    grid-column: 1 / -1;
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 0.9rem;
+    color: var(--accent-soft);
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(196, 162, 126, 0.35);
+  }
+
+  .album-art-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .album-art {
+    width: min(100%, 340px);
+    aspect-ratio: 1 / 1;
+    border-radius: 24px;
+    overflow: hidden;
+    position: relative;
+    background: #f3e3cf;
+    box-shadow: 0 10px 30px rgba(102, 72, 46, 0.35);
+    border: 1px solid rgba(206, 176, 139, 0.6);
+  }
+
+  .album-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .album-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: rgba(74, 52, 40, 0.7);
+    font-size: 1.05rem;
+    padding: 1.5rem;
+    text-align: center;
+  }
+
+  .album-placeholder span {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    margin-top: 0.75rem;
+    color: rgba(123, 91, 70, 0.8);
+  }
+
+  .meta {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--accent-soft);
+  }
+
+  .track {
+    font-size: 2.1rem;
+    font-weight: 650;
+    line-height: 1.2;
+    color: var(--accent);
+  }
+
+  .artist {
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: var(--accent-soft);
+  }
+
+  .status {
+    font-size: 0.95rem;
+    color: var(--accent-soft);
+    opacity: 0.9;
+    margin-top: 0.5rem;
+  }
+
+  .controls {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: 0.85rem;
+    color: var(--accent-soft);
+    margin-top: 0.5rem;
+  }
+
+  .login-btn {
+    padding: 0.7rem 1.6rem;
+    border-radius: 999px;
+    border: 1px solid rgba(186, 152, 116, 0.9);
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background: #f7e5d1;
+    color: var(--accent);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    box-shadow: 0 8px 18px rgba(143, 104, 73, 0.35);
+  }
+
+  .login-btn span.icon {
+    display: inline-block;
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+    border: 2px solid var(--accent-soft);
+  }
+
+  .eq-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.25rem;
+    height: 24px;
+  }
+
+  .eq-bar {
+    flex: 1;
+    max-width: 6px;
+    background: linear-gradient(to top, #f2ddc2, var(--accent-strong));
+    opacity: 0.9;
+    border-radius: 999px;
+    transform-origin: bottom;
+    transform: scaleY(0.25);
+  }
+
+  @media (max-width: 900px) {
     .frame {
-      width: 100%;
-      max-width: 1100px;
-      height: 100%;
-      max-height: 650px;
-      background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.18), rgba(7, 5, 22, 0.95));
-      border-radius: 28px;
-      box-shadow: var(--shadow-neon);
-      padding: 3vh 3vw;
-      display: grid;
-      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
-      grid-template-rows: auto 1fr auto;
-      gap: 2vh 3vw;
-    }
-
-    .header {
-      grid-column: 1 / -1;
-      text-align: center;
-      text-transform: uppercase;
-      letter-spacing: 0.25em;
-      font-size: 1.1rem;
-      color: var(--accent-soft);
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto 1fr auto;
     }
 
     .album-art-wrapper {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .album-art {
-      width: min(100%, 340px);
-      aspect-ratio: 1 / 1;
-      border-radius: 16px;
-      overflow: hidden;
-      position: relative;
-      background: #150f2c;
-      box-shadow: var(--shadow-neon);
-    }
-
-    .album-art img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .album-placeholder {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      color: rgba(255, 255, 255, 0.6);
-      font-size: 1.1rem;
-      padding: 1.5rem;
-      text-align: center;
-    }
-
-    .album-placeholder span {
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      letter-spacing: 0.25em;
-      margin-top: 0.75rem;
+      order: 2;
     }
 
     .meta {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 1rem;
-    }
-
-    .label {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.22em;
-      color: var(--accent-soft);
+      order: 3;
+      text-align: left;
+      align-items: flex-start;
     }
 
     .track {
-      font-size: 2.2rem;
-      font-weight: 700;
-      line-height: 1.1;
-      text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      font-size: 1.7rem;
     }
 
     .artist {
-      font-size: 1.4rem;
-      font-weight: 500;
-      color: var(--accent-soft);
+      font-size: 1.1rem;
     }
-
-    .status {
-      font-size: 0.95rem;
-      color: var(--accent-soft);
-      opacity: 0.8;
-    }
-
-    .controls {
-      grid-column: 1 / -1;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      font-size: 0.85rem;
-      color: var(--accent-soft);
-    }
-
-    .login-btn {
-      padding: 0.8rem 1.6rem;
-      border-radius: 999px;
-      border: none;
-      cursor: pointer;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      font-size: 0.8rem;
-      font-weight: 600;
-      background: rgba(7, 5, 22, 0.96);
-      color: var(--accent);
-      box-shadow: 0 0 12px rgba(0, 0, 0, 0.7);
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-
-    .login-btn span.icon {
-      display: inline-block;
-      width: 0.8rem;
-      height: 0.8rem;
-      border-radius: 50%;
-      border: 2px solid var(--accent);
-    }
-
-    .eq-bars {
-      display: flex;
-      align-items: flex-end;
-      gap: 0.25rem;
-      height: 24px;
-    }
-
-    .eq-bar {
-      flex: 1;
-      max-width: 6px;
-      background: linear-gradient(to top, #150f2c, var(--accent-strong));
-      opacity: 0.95;
-      border-radius: 999px;
-      transform-origin: bottom;
-      transform: scaleY(0.3);
-    }
-
-    @media (max-width: 900px) {
-      .frame {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto 1fr auto;
-      }
-
-      .album-art-wrapper {
-        order: 2;
-      }
-
-      .meta {
-        order: 3;
-        text-align: center;
-        align-items: center;
-      }
-
-      .track {
-        font-size: 1.7rem;
-      }
-      .artist {
-        font-size: 1.1rem;
-      }
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
   <div class="frame">
@@ -566,4 +566,5 @@
 </script>
 </body>
 </html>
+
 
