@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="velvettaproom">
+<html lang="en" data-theme="cozy">
 
 <head>
   <meta charset="UTF-8" />
@@ -16,171 +16,169 @@
 /* =========================
    THEMES (SEXIER + CLEANER)
    ========================= */
-:root{
-  --bg: radial-gradient(circle at 30% 10%, #2a2a2f 0%, #141418 55%, #0b0b0e 100%);
-  --card-bg: rgba(18,18,22,0.72);
-  --card-border: rgba(255,255,255,0.10);
+/* =========================
+   THEME TOKENS (BASE)
+   ========================= */
+:root {
+  /* layout */
+  --frame-radius: 28px;
+
+  /* background + card */
+  --bg: radial-gradient(circle at top left, #fef3e2 0%, #f8e1c4 40%, #f5d0c5 75%, #f2c9b4 100%);
+  --card-bg: rgba(255, 255, 255, 0.92);
+  --card-border: rgba(195, 167, 137, 0.45);
+  --shadow: 0 14px 35px rgba(112, 72, 40, 0.28);
+
+  /* text */
+  --text: #4a3428;
+  --text-soft: #7b5b46;
+
+  /* accents */
+  --accent: #c47a4e;
+  --accent-2: #4a3428;
+
+  /* buttons */
+  --btn-bg: #f7e5d1;
+  --btn-border: rgba(186, 152, 116, 0.9);
+  --btn-text: #2b1b12;
+
+  /* EQ */
+  --eq-top: rgba(255,255,255,0.25);
+  --eq-bottom: var(--accent);
+
+  /* vinyl (centered + theme-driven) */
+  --vinyl-opacity: 1;
+  --vinyl-base: rgba(0,0,0,0.92);
+  --vinyl-groove: rgba(255,255,255,0.10);
+  --vinyl-highlight: rgba(196, 122, 78, 0.25);
+  --vinyl-label: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), transparent 55%),
+                 radial-gradient(circle at center, rgba(196,122,78,0.30), rgba(0,0,0,0.15));
+  --cover-shadow: 0 12px 28px rgba(60, 36, 20, 0.30);
+}
+
+/* =========================
+   THEME: COZY (your original vibe)
+   ========================= */
+html[data-theme="cozy"] {
+  --bg: radial-gradient(circle at top left, #fef3e2 0%, #f8e1c4 40%, #f5d0c5 75%, #f2c9b4 100%);
+  --card-bg: rgba(255, 255, 255, 0.92);
+  --card-border: rgba(195, 167, 137, 0.45);
+  --shadow: 0 14px 35px rgba(112, 72, 40, 0.28);
+
+  --text: #4a3428;
+  --text-soft: #7b5b46;
+
+  --accent: #c47a4e;
+  --accent-2: #4a3428;
+
+  --btn-bg: #f7e5d1;
+  --btn-border: rgba(186, 152, 116, 0.9);
+  --btn-text: #2b1b12;
+
+  --vinyl-opacity: 1;
+  --vinyl-highlight: rgba(196, 122, 78, 0.25);
+  --vinyl-label: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), transparent 55%),
+                 radial-gradient(circle at center, rgba(196,122,78,0.30), rgba(0,0,0,0.15));
+}
+
+/* =========================
+   THEME: VINTAGE NEON JUKEBOX (electric + eye-catching)
+   ========================= */
+html[data-theme="vintage"] {
+  --bg:
+    radial-gradient(circle at 20% 10%, rgba(60,241,255,0.30), transparent 55%),
+    radial-gradient(circle at 80% 25%, rgba(255,79,216,0.24), transparent 55%),
+    radial-gradient(circle at 45% 90%, rgba(255,232,90,0.18), transparent 55%),
+    linear-gradient(135deg, #050515 0%, #0a0a22 45%, #040410 100%);
+
+  --card-bg: rgba(10, 10, 28, 0.70);
+  --card-border: rgba(60,241,255,0.22);
+  --shadow: 0 22px 70px rgba(0,0,0,0.65);
+
+  --text: rgba(255,255,255,0.93);
+  --text-soft: rgba(255,255,255,0.70);
+
+  --accent: #3cf1ff;   /* neon cyan */
+  --accent-2: #ff4fd8; /* neon pink */
+
+  --btn-bg: linear-gradient(135deg, rgba(60,241,255,0.20), rgba(255,79,216,0.16));
+  --btn-border: rgba(255,232,90,0.38);
+  --btn-text: rgba(255,255,255,0.95);
+
+  --eq-top: rgba(255,255,255,0.10);
+  --eq-bottom: #ffe85a; /* neon yellow EQ */
+
+  /* vinyl: neon label + slightly brighter grooves */
+  --vinyl-opacity: 1;
+  --vinyl-groove: rgba(255,255,255,0.14);
+  --vinyl-highlight: rgba(60,241,255,0.25);
+  --vinyl-label:
+    radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), transparent 55%),
+    conic-gradient(from 210deg, #3cf1ff, #ff4fd8, #ffe85a, #3cf1ff);
+  --cover-shadow: 0 16px 44px rgba(0,0,0,0.60);
+}
+
+/* =========================
+   THEME: TAPROOM (bold + modern brewery)
+   ========================= */
+html[data-theme="taproom"] {
+  --bg:
+    radial-gradient(circle at 20% 10%, rgba(255,176,0,0.22), transparent 55%),
+    radial-gradient(circle at 85% 35%, rgba(45,226,197,0.16), transparent 55%),
+    radial-gradient(circle at 60% 95%, rgba(126,255,103,0.10), transparent 55%),
+    linear-gradient(135deg, #071014 0%, #0b151b 45%, #05090c 100%);
+
+  --card-bg: rgba(8, 12, 14, 0.72);
+  --card-border: rgba(255,176,0,0.28);
+  --shadow: 0 22px 70px rgba(0,0,0,0.68);
 
   --text: rgba(255,255,255,0.92);
   --text-soft: rgba(255,255,255,0.68);
 
-  --accent: #caa15a;          /* brass */
-  --accent-2: #8b2f3c;        /* wine */
-  --shadow: 0 18px 55px rgba(0,0,0,0.55);
+  --accent: #ffb000;   /* amber */
+  --accent-2: #2de2c5; /* teal pop */
 
-  --btn-bg: rgba(255,255,255,0.10);
-  --btn-border: rgba(255,255,255,0.16);
+  --btn-bg: linear-gradient(135deg, rgba(255,176,0,0.22), rgba(45,226,197,0.12));
+  --btn-border: rgba(255,255,255,0.14);
+  --btn-text: rgba(255,255,255,0.95);
 
-  --frame-radius: 28px;
+  --eq-top: rgba(255,255,255,0.10);
+  --eq-bottom: #2de2c5; /* teal EQ */
 
-  /* Vinyl tuning */
+  /* vinyl: "beer label" center */
   --vinyl-opacity: 1;
-  --vinyl-groove: rgba(255,255,255,0.08);
-  --vinyl-base: rgba(0,0,0,0.92);
-  --vinyl-highlight: rgba(202,161,90,0.25);
-  --cover-shadow: 0 14px 34px rgba(0,0,0,0.45);
-}
-
-/* Theme: NOIR BRASS (default) */
-html[data-theme="noirbrass"]{
-  --bg:
-    radial-gradient(circle at 20% 0%, rgba(202,161,90,0.18) 0%, transparent 55%),
-    radial-gradient(circle at 90% 95%, rgba(139,47,60,0.16) 0%, transparent 60%),
-    linear-gradient(135deg, #0a0a0d 0%, #111116 45%, #07070a 100%);
-
-  --card-bg: rgba(15,15,18,0.74);
-  --card-border: rgba(202,161,90,0.20);
-
-  --accent: #caa15a;
-  --accent-2: #8b2f3c;
-}
-
-/* Theme: VELVET TAPROOM (deep + warm) */
-html[data-theme="velvettaproom"]{
-  --bg:
-    radial-gradient(circle at 15% 10%, rgba(244,196,48,0.16) 0%, transparent 55%),
-    radial-gradient(circle at 90% 80%, rgba(255,107,107,0.10) 0%, transparent 60%),
-    linear-gradient(135deg, #070b10 0%, #0c121a 45%, #05070b 100%);
-
-  --card-bg: rgba(11,14,18,0.74);
-  --card-border: rgba(244,196,48,0.22);
-
-  --accent: #f4c430;   /* gold */
-  --accent-2: #ff6b6b; /* warm pop */
-  --vinyl-highlight: rgba(244,196,48,0.22);
+  --vinyl-groove: rgba(255,255,255,0.10);
+  --vinyl-highlight: rgba(255,176,0,0.24);
+  --vinyl-label:
+    radial-gradient(circle at 35% 30%, rgba(255,255,255,0.16), transparent 55%),
+    radial-gradient(circle at center, rgba(255,176,0,0.45), rgba(0,0,0,0.20));
 }
 
 /* =========================
-   BASE
+   APPLY TOKENS (hook into your existing selectors)
    ========================= */
-*{box-sizing:border-box;margin:0;padding:0;}
-html,body{
-  width:100%;
-  height:100%;
-  overflow:hidden;
-  font-family:"Nunito",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-}
-body{
-  background: var(--bg);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding: 2.2svh 2.2svw;
-  color: var(--text);
-}
+body { background: var(--bg); }
 
-/* soft vignette */
-body::after{
-  content:"";
-  position:fixed;
-  inset:-20%;
-  pointer-events:none;
-  background: radial-gradient(circle at 50% 30%, transparent 0%, rgba(0,0,0,0.50) 65%, rgba(0,0,0,0.78) 100%);
-  opacity:0.85;
-}
-
-/* =========================
-   FRAME
-   ========================= */
-.frame{
-  width: min(1100px, 100%);
-  height: min(650px, 100svh);
+.frame {
   background: var(--card-bg);
   border: 1px solid var(--card-border);
-  border-radius: var(--frame-radius);
   box-shadow: var(--shadow);
-  padding: 3svh 3svw;
-  display:grid;
-  grid-template-columns: minmax(0,1.1fr) minmax(0,1.1fr);
-  grid-template-rows: auto 1fr auto;
-  gap: 2svh 3svw;
-  position:relative;
-  overflow:hidden;
-  backdrop-filter: blur(14px);
-  z-index:1;
+  border-radius: var(--frame-radius);
 }
 
-.frame::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.07), transparent 55%),
-    radial-gradient(circle at 25% 15%, rgba(202,161,90,0.12), transparent 40%);
-  opacity:0.9;
+.track { color: var(--text); }
+.artist, .label, .status, .header { color: var(--text-soft); }
+
+.pill-btn {
+  background: var(--btn-bg);
+  border: 1px solid var(--btn-border);
+  color: var(--btn-text);
 }
 
 /* =========================
-   HEADER
+   VINYL: PERFECTLY CENTERED + CLEAN
+   (replace your current .vinyl block with this)
    ========================= */
-.header{
-  grid-column:1 / -1;
-  display:flex;
-  justify-content:space-between;
-  align-items:baseline;
-  gap:1rem;
-  padding-bottom:0.6rem;
-  border-bottom:1px solid rgba(255,255,255,0.10);
-  text-transform:uppercase;
-  letter-spacing:0.18em;
-  font-size:0.88rem;
-  color: var(--text-soft);
-  position:relative;
-  z-index:2;
-}
-
-.header .mini{
-  font-size:0.72rem;
-  letter-spacing:0.22em;
-  opacity:0.85;
-  white-space:nowrap;
-}
-
-/* =========================
-   ALBUM / VINYL (CLEAN + CENTERED)
-   ========================= */
-.album-art-wrapper{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  position:relative;
-  z-index:2;
-}
-
-.album-art{
-  width: min(100%, 360px);
-  aspect-ratio: 1 / 1;
-  border-radius: 26px;
-  position:relative;
-  overflow:hidden;
-  display:grid;
-  place-items:center;
-  border:1px solid rgba(255,255,255,0.12);
-  background: rgba(255,255,255,0.06);
-}
-
-/* Vinyl: perfectly centered (no translateX) */
 .vinyl{
   position:absolute;
   top:50%;
@@ -200,17 +198,20 @@ body::after{
   filter: saturate(1.05) contrast(1.08);
 }
 
-/* label */
 .vinyl::after{
   content:"";
   position:absolute;
   inset: 38%;
   border-radius:999px;
-  background:
-    radial-gradient(circle at 35% 30%, rgba(255,255,255,0.16), transparent 55%),
-    radial-gradient(circle at 50% 50%, rgba(0,0,0,0.32), rgba(0,0,0,0.10));
+  background: var(--vinyl-label);
   border: 1px solid rgba(255,255,255,0.10);
 }
+
+/* EQ colors */
+.eq-bar{
+  background: linear-gradient(to top, var(--eq-top), var(--eq-bottom));
+}
+
 
 /* Cover image: centered + crisp */
 .album-art img#albumImg{
@@ -495,33 +496,35 @@ body::after{
     ];
 
     // ==== THEME SWITCHER ====
-    const THEMES = {
-      vintage: { label: "Vintage" },
-      taproom: { label: "Taproom" }
-    };
+    // ==== THEME SWITCHER ====
+const THEMES = {
+  cozy: { label: "Cozy" },
+  vintage: { label: "Vintage Neon" },
+  taproom: { label: "Taproom" }
+};
 
-    const themeLabelEl = document.getElementById("themeLabel");
-    const themeButton = document.getElementById("themeButton");
+function setTheme(themeKey, { persist = true } = {}) {
+  const t = THEMES[themeKey] ? themeKey : "cozy";
+  document.documentElement.dataset.theme = t;
+  themeLabelEl.textContent = `Theme: ${THEMES[t].label}`;
+  if (persist) localStorage.setItem("jukebox_theme", t);
+}
 
-    function setTheme(themeKey, { persist = true } = {}) {
-      const t = THEMES[themeKey] ? themeKey : "vintage";
-      document.documentElement.dataset.theme = t;
-      themeLabelEl.textContent = `Theme: ${THEMES[t].label}`;
-      if (persist) localStorage.setItem("jukebox_theme", t);
-    }
+function initTheme() {
+  const params = new URLSearchParams(location.search);
+  const fromUrl = params.get("theme");          // ?theme=cozy|vintage|taproom
+  const fromStorage = localStorage.getItem("jukebox_theme");
+  setTheme(fromUrl || fromStorage || "cozy", { persist: !fromUrl });
+}
 
-    function initTheme() {
-      const params = new URLSearchParams(location.search);
-      const fromUrl = params.get("theme");
-      const fromStorage = localStorage.getItem("jukebox_theme");
-      setTheme(fromUrl || fromStorage || "vintage", { persist: !fromUrl });
-    }
+function toggleTheme() {
+  const order = ["cozy", "vintage", "taproom"];
+  const current = document.documentElement.dataset.theme || "cozy";
+  const idx = order.indexOf(current);
+  const next = order[(idx + 1) % order.length];
+  setTheme(next);
+}
 
-    function toggleTheme() {
-      const current = document.documentElement.dataset.theme || "vintage";
-      const next = current === "vintage" ? "taproom" : "vintage";
-      setTheme(next);
-    }
 
     // ==== PKCE HELPERS (for Authorization Code with PKCE) ====
     function generateRandomString(length) {
@@ -894,5 +897,6 @@ body::after{
   </script>
 </body>
 </html>
+
 
 
