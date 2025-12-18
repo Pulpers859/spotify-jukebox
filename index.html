@@ -545,6 +545,190 @@ html[data-theme="vintage"] .vinyl::after{
     0 0 12px rgba(60,241,255,0.20),
     0 0 12px rgba(255,79,216,0.16);
 }
+/* =========================================================
+   VINTAGE THEME = 1970s NEON LOUNGE JUKEBOX
+   Replaces the earlier marquee approach.
+   No extra HTML needed. No overlap with content.
+   ========================================================= */
+
+/* Stronger lounge palette (magenta/cyan/purple) */
+html[data-theme="vintage"]{
+  --bg:
+    radial-gradient(circle at 18% 12%, rgba(0, 255, 240, 0.24), transparent 52%),
+    radial-gradient(circle at 78% 18%, rgba(255, 0, 214, 0.22), transparent 54%),
+    radial-gradient(circle at 55% 88%, rgba(255, 179, 0, 0.10), transparent 62%),
+    linear-gradient(135deg, #050014 0%, #09001f 35%, #04000e 100%);
+
+  --card-bg: rgba(10, 6, 22, 0.70);
+  --card-border: rgba(255,255,255,0.12);
+  --shadow: 0 26px 90px rgba(0,0,0,0.75);
+
+  --text: rgba(255,255,255,0.94);
+  --text-soft: rgba(255,255,255,0.72);
+
+  --accent: #00fff0;     /* neon cyan */
+  --eq-bottom: #ff00d6;  /* neon magenta */
+  --eq-top: rgba(255,255,255,0.08);
+
+  --btn-bg: rgba(255,255,255,0.08);
+  --btn-border: rgba(255,255,255,0.16);
+  --btn-text: rgba(255,255,255,0.94);
+
+  --vinyl-groove: rgba(255,255,255,0.13);
+  --vinyl-highlight: rgba(0,255,240,0.18);
+  --vinyl-label:
+    radial-gradient(circle at 30% 30%, rgba(255,255,255,0.16), transparent 55%),
+    conic-gradient(from 210deg, #00fff0, #ff00d6, #8a2bff, #00fff0);
+
+  --cover-shadow: 0 20px 62px rgba(0,0,0,0.70);
+}
+
+/* Make frame feel like smoked glass */
+html[data-theme="vintage"] .frame{
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01)),
+    rgba(10, 6, 22, 0.70);
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow:
+    0 26px 90px rgba(0,0,0,0.75),
+    0 0 26px rgba(0,255,240,0.18),
+    0 0 40px rgba(255,0,214,0.14);
+}
+
+/* Give the header a neon lounge glow (not cheesy) */
+html[data-theme="vintage"] .header{
+  border-bottom-color: rgba(255,255,255,0.12);
+  text-shadow:
+    0 0 10px rgba(0,255,240,0.14),
+    0 0 14px rgba(255,0,214,0.10);
+}
+
+/* =========================================================
+   NEW "MARQUEE" REPLACEMENT:
+   Neon rails live in the frame padding gutter, not on content.
+   No overlap because we pin them to frame edges and keep them thin.
+   ========================================================= */
+
+/* IMPORTANT: ensure pseudo elements sit behind content */
+html[data-theme="vintage"] .frame{
+  position: relative;
+  overflow: hidden;
+}
+html[data-theme="vintage"] .frame > *{
+  position: relative;
+  z-index: 2;
+}
+
+/* Outer neon rail */
+html[data-theme="vintage"] .frame::after{
+  content:"";
+  position:absolute;
+  inset: 10px;                 /* stays in gutter */
+  border-radius: calc(var(--frame-radius) - 10px);
+  pointer-events:none;
+  border: 2px solid rgba(0,255,240,0.42);
+  box-shadow:
+    0 0 10px rgba(0,255,240,0.35),
+    0 0 22px rgba(0,255,240,0.22);
+  opacity: 0.95;
+  z-index: 0;
+}
+
+/* Inner neon rail (magenta) + soft “chaser” glow using conic gradient */
+html[data-theme="vintage"] .frame::before{
+  content:"";
+  position:absolute;
+  inset: 24px;                 /* still in gutter */
+  border-radius: calc(var(--frame-radius) - 18px);
+  pointer-events:none;
+  border: 2px solid rgba(255,0,214,0.30);
+  box-shadow:
+    0 0 10px rgba(255,0,214,0.26),
+    0 0 22px rgba(255,0,214,0.16);
+  z-index: 0;
+}
+
+/* Chaser glow layer (separate so it animates without moving borders) */
+html[data-theme="vintage"] .frame .neon-chase{
+  display:none; /* hidden unless you add the div; see option below */
+}
+
+/* OPTIONAL: If you want animated “chaser” glow, add ONE div (below) and enable: */
+html[data-theme="vintage"] .frame .neon-chase{
+  display:block;
+  position:absolute;
+  inset: 18px;
+  border-radius: calc(var(--frame-radius) - 14px);
+  pointer-events:none;
+  z-index: 1;
+  background:
+    conic-gradient(from 0deg,
+      rgba(0,255,240,0.00) 0%,
+      rgba(0,255,240,0.00) 75%,
+      rgba(0,255,240,0.18) 82%,
+      rgba(255,0,214,0.24) 88%,
+      rgba(138,43,255,0.14) 92%,
+      rgba(0,255,240,0.00) 100%);
+  filter: blur(10px);
+  opacity: 0.95;
+  animation: neonChase 3.6s linear infinite;
+}
+
+@keyframes neonChase{
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* =========================================================
+   Album area = chrome-lite / neon bezel
+   ========================================================= */
+html[data-theme="vintage"] .album-art{
+  border-color: rgba(255,255,255,0.16);
+  box-shadow:
+    0 20px 70px rgba(0,0,0,0.70),
+    0 0 18px rgba(0,255,240,0.12);
+  background:
+    radial-gradient(circle at 50% 30%, rgba(255,255,255,0.10), transparent 55%),
+    rgba(255,255,255,0.06);
+}
+
+/* Track underline: lounge neon bar */
+html[data-theme="vintage"] .track{
+  text-shadow:
+    0 0 12px rgba(0,255,240,0.14),
+    0 0 16px rgba(255,0,214,0.10);
+}
+html[data-theme="vintage"] .track::after{
+  content:"";
+  display:block;
+  width: min(380px, 72%);
+  height: 4px;
+  margin-top: 12px;
+  border-radius:999px;
+  background: linear-gradient(90deg, rgba(0,255,240,0.95), rgba(255,0,214,0.90), rgba(138,43,255,0.80));
+  box-shadow:
+    0 0 14px rgba(0,255,240,0.22),
+    0 0 18px rgba(255,0,214,0.18);
+  opacity: 0.95;
+}
+
+/* Buttons: “neon lounge glass” */
+html[data-theme="vintage"] .pill-btn{
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.18);
+  box-shadow:
+    0 10px 26px rgba(0,0,0,0.32),
+    0 0 14px rgba(0,255,240,0.10),
+    0 0 18px rgba(255,0,214,0.08);
+}
+html[data-theme="vintage"] .pill-btn:hover{
+  border-color: rgba(0,255,240,0.35);
+}
+
+/* EQ: neon magenta “club” */
+html[data-theme="vintage"] .eq-bar{
+  background: linear-gradient(to top, rgba(255,255,255,0.06), #ff00d6);
+}
 
     
   </style>
@@ -552,8 +736,7 @@ html[data-theme="vintage"] .vinyl::after{
 
 <body>
   <div class="frame">
-    <div class="marquee top"></div>
-    <div class="marquee bottom"></div>
+    <div class="neon-chase"></div>
     <div class="header">
       <div>Now Playing</div>
       <div class="mini" id="themeLabel">Theme: Cozy</div>
@@ -993,4 +1176,5 @@ html[data-theme="vintage"] .vinyl::after{
   </script>
 </body>
 </html>
+
 
