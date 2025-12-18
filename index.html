@@ -427,11 +427,133 @@
         flex: 0 0 10px;
       }
     }
+/* =========================================================
+   TRUE VINTAGE JUKEBOX NEON (ONLY for html[data-theme="vintage"])
+   ========================================================= */
+
+/* Neon tube frame + inner glass */
+html[data-theme="vintage"] .frame{
+  border-color: rgba(60,241,255,0.35);
+  box-shadow:
+    0 22px 70px rgba(0,0,0,0.70),
+    0 0 22px rgba(60,241,255,0.22),
+    0 0 40px rgba(255,79,216,0.16);
+}
+
+/* Outer neon tube */
+html[data-theme="vintage"] .frame::after{
+  content:"";
+  position:absolute;
+  inset: 16px;
+  border-radius: 20px;
+  pointer-events:none;
+  border: 2px solid rgba(60,241,255,0.48);
+  box-shadow:
+    0 0 10px rgba(60,241,255,0.45),
+    0 0 22px rgba(60,241,255,0.28),
+    0 0 34px rgba(255,79,216,0.18);
+}
+
+/* Inner neon tube (pink) */
+html[data-theme="vintage"] .frame::before{
+  content:"";
+  position:absolute;
+  inset: 30px;
+  border-radius: 14px;
+  pointer-events:none;
+  border: 2px solid rgba(255,79,216,0.38);
+  box-shadow:
+    0 0 10px rgba(255,79,216,0.36),
+    0 0 22px rgba(255,79,216,0.22);
+  opacity: 0.9;
+}
+
+/* Marquee bulbs strip (top + bottom) */
+html[data-theme="vintage"] .frame .marquee{
+  position:absolute;
+  left: 30px;
+  right: 30px;
+  height: 16px;
+  pointer-events:none;
+  opacity: 0.95;
+  background:
+    radial-gradient(circle, rgba(255,232,90,0.90) 0 35%, rgba(255,232,90,0.0) 55%) 0 50% / 22px 16px repeat-x;
+  filter: drop-shadow(0 0 8px rgba(255,232,90,0.35));
+}
+
+html[data-theme="vintage"] .frame .marquee.top{ top: 18px; }
+html[data-theme="vintage"] .frame .marquee.bottom{ bottom: 18px; }
+
+/* Bulb twinkle (subtle) */
+@keyframes bulbTwinkle{
+  0%, 100% { opacity: 0.80; filter: drop-shadow(0 0 7px rgba(255,232,90,0.30)); }
+  50%      { opacity: 1.00; filter: drop-shadow(0 0 12px rgba(255,232,90,0.50)); }
+}
+html[data-theme="vintage"] .frame .marquee{
+  animation: bulbTwinkle 2.2s ease-in-out infinite;
+}
+
+/* Neon shimmer behind header line */
+html[data-theme="vintage"] .header{
+  border-bottom-color: rgba(255,255,255,0.14);
+  text-shadow:
+    0 0 10px rgba(60,241,255,0.18),
+    0 0 16px rgba(255,79,216,0.14);
+}
+
+/* Neon accent underline under the track title */
+html[data-theme="vintage"] .track{
+  position:relative;
+  text-shadow:
+    0 0 12px rgba(60,241,255,0.16),
+    0 0 18px rgba(255,79,216,0.12);
+}
+
+html[data-theme="vintage"] .track::after{
+  content:"";
+  display:block;
+  width: min(360px, 70%);
+  height: 3px;
+  margin-top: 12px;
+  border-radius:999px;
+  background: linear-gradient(90deg, rgba(60,241,255,0.9), rgba(255,79,216,0.85), rgba(255,232,90,0.75));
+  box-shadow:
+    0 0 12px rgba(60,241,255,0.22),
+    0 0 18px rgba(255,79,216,0.18);
+  opacity: 0.9;
+}
+
+/* Buttons get that jukebox glass glow */
+html[data-theme="vintage"] .pill-btn{
+  box-shadow:
+    0 10px 26px rgba(0,0,0,0.28),
+    0 0 14px rgba(60,241,255,0.12),
+    0 0 18px rgba(255,79,216,0.10);
+}
+
+/* Album "glass bezel" look */
+html[data-theme="vintage"] .album-art{
+  border-color: rgba(60,241,255,0.22);
+  box-shadow:
+    0 18px 60px rgba(0,0,0,0.55),
+    0 0 18px rgba(60,241,255,0.12);
+}
+
+/* Optional: slightly brighter vinyl label in vintage */
+html[data-theme="vintage"] .vinyl::after{
+  box-shadow:
+    0 0 12px rgba(60,241,255,0.20),
+    0 0 12px rgba(255,79,216,0.16);
+}
+
+    
   </style>
 </head>
 
 <body>
   <div class="frame">
+    <div class="marquee top"></div>
+    <div class="marquee bottom"></div>
     <div class="header">
       <div>Now Playing</div>
       <div class="mini" id="themeLabel">Theme: Cozy</div>
@@ -871,3 +993,4 @@
   </script>
 </body>
 </html>
+
