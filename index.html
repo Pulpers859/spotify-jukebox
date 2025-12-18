@@ -1,902 +1,369 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="cozy">
-
 <head>
   <meta charset="UTF-8" />
   <title>Funcleson Cozy Jukebox</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Cozy fonts -->
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
 
   <style>
     /* =========================
-       THEME TOKENS (DEFAULTS)
+       THEME TOKENS (BASE)
        ========================= */
-/* =========================
-   THEMES (SEXIER + CLEANER)
-   ========================= */
-/* =========================
-   THEME TOKENS (BASE)
-   ========================= */
-:root {
-  /* layout */
-  --frame-radius: 28px;
-
-  /* background + card */
-  --bg: radial-gradient(circle at top left, #fef3e2 0%, #f8e1c4 40%, #f5d0c5 75%, #f2c9b4 100%);
-  --card-bg: rgba(255, 255, 255, 0.92);
-  --card-border: rgba(195, 167, 137, 0.45);
-  --shadow: 0 14px 35px rgba(112, 72, 40, 0.28);
-
-  /* text */
-  --text: #4a3428;
-  --text-soft: #7b5b46;
-
-  /* accents */
-  --accent: #c47a4e;
-  --accent-2: #4a3428;
-
-  /* buttons */
-  --btn-bg: #f7e5d1;
-  --btn-border: rgba(186, 152, 116, 0.9);
-  --btn-text: #2b1b12;
-
-  /* EQ */
-  --eq-top: rgba(255,255,255,0.25);
-  --eq-bottom: var(--accent);
-
-  /* vinyl (centered + theme-driven) */
-  --vinyl-opacity: 1;
-  --vinyl-base: rgba(0,0,0,0.92);
-  --vinyl-groove: rgba(255,255,255,0.10);
-  --vinyl-highlight: rgba(196, 122, 78, 0.25);
-  --vinyl-label: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), transparent 55%),
-                 radial-gradient(circle at center, rgba(196,122,78,0.30), rgba(0,0,0,0.15));
-  --cover-shadow: 0 12px 28px rgba(60, 36, 20, 0.30);
-}
-
-/* =========================
-   THEME: COZY (your original vibe)
-   ========================= */
-html[data-theme="cozy"] {
-  --bg: radial-gradient(circle at top left, #fef3e2 0%, #f8e1c4 40%, #f5d0c5 75%, #f2c9b4 100%);
-  --card-bg: rgba(255, 255, 255, 0.92);
-  --card-border: rgba(195, 167, 137, 0.45);
-  --shadow: 0 14px 35px rgba(112, 72, 40, 0.28);
-
-  --text: #4a3428;
-  --text-soft: #7b5b46;
-
-  --accent: #c47a4e;
-  --accent-2: #4a3428;
-
-  --btn-bg: #f7e5d1;
-  --btn-border: rgba(186, 152, 116, 0.9);
-  --btn-text: #2b1b12;
-
-  --vinyl-opacity: 1;
-  --vinyl-highlight: rgba(196, 122, 78, 0.25);
-  --vinyl-label: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), transparent 55%),
-                 radial-gradient(circle at center, rgba(196,122,78,0.30), rgba(0,0,0,0.15));
-}
-
-/* =========================
-   THEME: VINTAGE NEON JUKEBOX (electric + eye-catching)
-   ========================= */
-html[data-theme="vintage"] {
-  --bg:
-    radial-gradient(circle at 20% 10%, rgba(60,241,255,0.30), transparent 55%),
-    radial-gradient(circle at 80% 25%, rgba(255,79,216,0.24), transparent 55%),
-    radial-gradient(circle at 45% 90%, rgba(255,232,90,0.18), transparent 55%),
-    linear-gradient(135deg, #050515 0%, #0a0a22 45%, #040410 100%);
-
-  --card-bg: rgba(10, 10, 28, 0.70);
-  --card-border: rgba(60,241,255,0.22);
-  --shadow: 0 22px 70px rgba(0,0,0,0.65);
-
-  --text: rgba(255,255,255,0.93);
-  --text-soft: rgba(255,255,255,0.70);
-
-  --accent: #3cf1ff;   /* neon cyan */
-  --accent-2: #ff4fd8; /* neon pink */
-
-  --btn-bg: linear-gradient(135deg, rgba(60,241,255,0.20), rgba(255,79,216,0.16));
-  --btn-border: rgba(255,232,90,0.38);
-  --btn-text: rgba(255,255,255,0.95);
-
-  --eq-top: rgba(255,255,255,0.10);
-  --eq-bottom: #ffe85a; /* neon yellow EQ */
-
-  /* vinyl: neon label + slightly brighter grooves */
-  --vinyl-opacity: 1;
-  --vinyl-groove: rgba(255,255,255,0.14);
-  --vinyl-highlight: rgba(60,241,255,0.25);
-  --vinyl-label:
-    radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), transparent 55%),
-    conic-gradient(from 210deg, #3cf1ff, #ff4fd8, #ffe85a, #3cf1ff);
-  --cover-shadow: 0 16px 44px rgba(0,0,0,0.60);
-}
-
-/* =========================
-   THEME: TAPROOM (bold + modern brewery)
-   ========================= */
-html[data-theme="taproom"] {
-  --bg:
-    radial-gradient(circle at 20% 10%, rgba(255,176,0,0.22), transparent 55%),
-    radial-gradient(circle at 85% 35%, rgba(45,226,197,0.16), transparent 55%),
-    radial-gradient(circle at 60% 95%, rgba(126,255,103,0.10), transparent 55%),
-    linear-gradient(135deg, #071014 0%, #0b151b 45%, #05090c 100%);
-
-  --card-bg: rgba(8, 12, 14, 0.72);
-  --card-border: rgba(255,176,0,0.28);
-  --shadow: 0 22px 70px rgba(0,0,0,0.68);
-
-  --text: rgba(255,255,255,0.92);
-  --text-soft: rgba(255,255,255,0.68);
-
-  --accent: #ffb000;   /* amber */
-  --accent-2: #2de2c5; /* teal pop */
-
-  --btn-bg: linear-gradient(135deg, rgba(255,176,0,0.22), rgba(45,226,197,0.12));
-  --btn-border: rgba(255,255,255,0.14);
-  --btn-text: rgba(255,255,255,0.95);
-
-  --eq-top: rgba(255,255,255,0.10);
-  --eq-bottom: #2de2c5; /* teal EQ */
-
-  /* vinyl: "beer label" center */
-  --vinyl-opacity: 1;
-  --vinyl-groove: rgba(255,255,255,0.10);
-  --vinyl-highlight: rgba(255,176,0,0.24);
-  --vinyl-label:
-    radial-gradient(circle at 35% 30%, rgba(255,255,255,0.16), transparent 55%),
-    radial-gradient(circle at center, rgba(255,176,0,0.45), rgba(0,0,0,0.20));
-}
-
-/* =========================
-   APPLY TOKENS (hook into your existing selectors)
-   ========================= */
-body { background: var(--bg); }
-
-.frame {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  box-shadow: var(--shadow);
-  border-radius: var(--frame-radius);
-}
-
-.track { color: var(--text); }
-.artist, .label, .status, .header { color: var(--text-soft); }
-
-.pill-btn {
-  background: var(--btn-bg);
-  border: 1px solid var(--btn-border);
-  color: var(--btn-text);
-}
-
-/* =========================
-   VINYL: PERFECTLY CENTERED + CLEAN
-   (replace your current .vinyl block with this)
-   ========================= */
-.vinyl{
-  position:absolute;
-  top:50%;
-  left:50%;
-  width: 94%;
-  height: 94%;
-  transform: translate(-50%, -50%);
-  border-radius:999px;
-  opacity: var(--vinyl-opacity);
-  pointer-events:none;
-  box-shadow: 0 18px 48px rgba(0,0,0,0.55);
-  background:
-    radial-gradient(circle at 50% 50%, rgba(255,255,255,0.20) 0 2.2%, transparent 2.2% 100%),
-    radial-gradient(circle at 50% 50%, var(--vinyl-highlight) 0 9%, transparent 9% 100%),
-    radial-gradient(circle at 50% 50%, rgba(0,0,0,0.55) 0 13%, var(--vinyl-base) 28%, rgba(0,0,0,0.98) 100%),
-    repeating-radial-gradient(circle at 50% 50%, var(--vinyl-groove) 0 1px, rgba(255,255,255,0.00) 2px 7px);
-  filter: saturate(1.05) contrast(1.08);
-}
-
-.vinyl::after{
-  content:"";
-  position:absolute;
-  inset: 38%;
-  border-radius:999px;
-  background: var(--vinyl-label);
-  border: 1px solid rgba(255,255,255,0.10);
-}
-
-/* EQ colors */
-.eq-bar{
-  background: linear-gradient(to top, var(--eq-top), var(--eq-bottom));
-}
-
-
-/* Cover image: centered + crisp */
-.album-art img#albumImg{
-  width: 74%;
-  height: 74%;
-  object-fit: cover;
-  border-radius: 18px;
-  position:relative;
-  z-index:2;
-  display:none;
-  box-shadow: var(--cover-shadow);
-  border:1px solid rgba(255,255,255,0.14);
-}
-
-/* nice “pocket” to reduce vinyl noise */
-.album-art::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  background:
-    radial-gradient(circle at 50% 50%, rgba(0,0,0,0.00) 0 55%, rgba(0,0,0,0.22) 72%, rgba(0,0,0,0.38) 100%);
-  opacity:0.8;
-}
-
-@keyframes spinDisc{
-  from { transform: translate(-50%, -50%) rotate(0deg); }
-  to   { transform: translate(-50%, -50%) rotate(360deg); }
-}
-.album-art.spinning .vinyl{
-  animation: spinDisc 2.8s linear infinite;
-}
-
-/* Placeholder */
-.album-placeholder{
-  width:100%;
-  height:100%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-  text-align:center;
-  padding:1.5rem;
-  z-index:3;
-  position:relative;
-  color: rgba(255,255,255,0.70);
-}
-.album-placeholder span{
-  font-size:0.78rem;
-  text-transform:uppercase;
-  letter-spacing:0.18em;
-  margin-top:0.75rem;
-  color: rgba(255,255,255,0.55);
-}
-
-/* =========================
-   META
-   ========================= */
-.meta{
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  gap: 1rem;
-  position:relative;
-  z-index:2;
-}
-.label{
-  font-size:0.75rem;
-  text-transform:uppercase;
-  letter-spacing:0.22em;
-  color: var(--text-soft);
-}
-.track{
-  font-size: 2.2rem;
-  line-height:1.15;
-  font-weight:700;
-  color: var(--text);
-  font-family:"DM Serif Display","Nunito",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-}
-.artist{
-  font-size: 1.3rem;
-  color: var(--text-soft);
-}
-.status{
-  font-size:0.98rem;
-  color: var(--text-soft);
-  opacity:0.95;
-}
-
-/* =========================
-   CONTROLS
-   ========================= */
-.controls{
-  grid-column:1 / -1;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:1rem;
-  margin-top:0.4rem;
-  position:relative;
-  z-index:2;
-}
-
-.btn-row{
-  display:flex;
-  align-items:center;
-  gap:0.6rem;
-  flex-wrap:wrap;
-}
-
-.pill-btn{
-  padding: 0.72rem 1.15rem;
-  border-radius:999px;
-  border:1px solid var(--btn-border);
-  background: var(--btn-bg);
-  color: var(--text);
-  cursor:pointer;
-  text-transform:uppercase;
-  letter-spacing:0.16em;
-  font-size:0.78rem;
-  font-weight:750;
-  display:inline-flex;
-  align-items:center;
-  gap:0.55rem;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 10px 24px rgba(0,0,0,0.25);
-}
-
-.pill-btn:hover{
-  border-color: rgba(255,255,255,0.26);
-}
-
-.pill-btn.secondary{
-  background: rgba(255,255,255,0.07);
-  border-color: rgba(255,255,255,0.12);
-  box-shadow:none;
-}
-
-.pill-btn span.icon{
-  width:0.75rem;
-  height:0.75rem;
-  border-radius:50%;
-  border:2px solid rgba(255,255,255,0.35);
-}
-
-/* EQ */
-.eq-bars{
-  display:flex;
-  align-items:flex-end;
-  gap:0.25rem;
-  height: 26px;
-  opacity:0.95;
-}
-.eq-bar{
-  flex:1;
-  max-width: 7px;
-  border-radius:999px;
-  background: linear-gradient(to top, rgba(255,255,255,0.12), var(--accent));
-  transform-origin: bottom;
-  transform: scaleY(0.25);
-  opacity: 0.9;
-}
-
-/* =========================
-   PORTRAIT MODE (your board)
-   ========================= */
-@media (orientation: portrait){
-  body{ padding:0; }
-  .frame{
-    width:100vw;
-    height:100svh;
-    border-radius:0;
-    grid-template-columns:1fr;
-    grid-template-rows:auto auto 1fr auto;
-    gap: 2.4svh 0;
-    padding: 4svh 6vw;
-  }
-  .album-art{
-    width: min(86vw, 560px);
-    border-radius: 30px;
-  }
-  .track{
-    font-size: clamp(2.0rem, 4.8vw, 2.9rem);
-  }
-  .artist{
-    font-size: clamp(1.15rem, 3.4vw, 1.6rem);
-  }
-  .controls{
-    flex-direction:column;
-    align-items:stretch;
-    gap: 1.2rem;
-  }
-  .btn-row{ justify-content:space-between; }
-  .eq-bars{
-    width:100%;
-    height: 36px;
-    justify-content:space-between;
-  }
-  .eq-bar{
-    max-width: 10px;
-    flex: 0 0 10px;
-  }
-}
-
-/* Landscape fallback (small screens) */
-@media (max-width: 900px) and (orientation: landscape){
-  .frame{
-    grid-template-columns:1fr;
-    grid-template-rows:auto auto 1fr auto;
-  }
-  .controls{ flex-direction:column; align-items:flex-start; }
-}
-
-    
-  </style>
-</head>
-
-<body>
-  <div class="frame">
-    <div class="header">
-      <div>Now Playing</div>
-      <div class="mini" id="themeLabel">Theme: Vintage</div>
-    </div>
-
-    <div class="album-art-wrapper">
-      <div class="album-art" id="albumArt">
-        <div class="vinyl" id="vinyl"></div>
-        <img id="albumImg" alt="" />
-        <div class="album-placeholder" id="albumPlaceholder">
-          <div>Nothing playing…</div>
-          <span>Start Spotify on any device</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="meta">
-      <div class="label">Track</div>
-      <div class="track" id="trackName">—</div>
-
-      <div class="label" style="margin-top: 0.75rem;">Artist</div>
-      <div class="artist" id="artistName">—</div>
-
-      <div class="status" id="statusText">
-        Connect to Spotify and start playing music.
-      </div>
-    </div>
-
-    <div class="controls">
-      <div class="btn-row">
-        <button class="pill-btn" id="loginButton">
-          <span class="icon"></span>
-          <span>Login with Spotify</span>
-        </button>
-
-        <button class="pill-btn secondary" id="themeButton" title="Switch theme">
-          Switch Theme
-        </button>
-
-        <button class="pill-btn secondary" id="logoutButton" title="Log out (clears saved tokens)">
-          Logout
-        </button>
-      </div>
-
-      <div class="eq-bars" id="eqBars" aria-hidden="true">
-        <div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div>
-        <div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div>
-        <div class="eq-bar"></div>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    // ==== CONFIG: PUT YOUR DATA HERE ====
-    const CLIENT_ID = "2d65a25b08094613b3a685c6f9a513f2";
-
-    // Use this page's URL as redirect; must match one of the Redirect URIs in Spotify app settings
-    const REDIRECT_URI = window.location.origin + window.location.pathname;
-
-    const SCOPES = [
-      "user-read-playback-state",
-      "user-read-currently-playing"
-    ];
-
-    // ==== THEME SWITCHER ====
-    // ==== THEME SWITCHER ====
-const THEMES = {
-  cozy: { label: "Cozy" },
-  vintage: { label: "Vintage Neon" },
-  taproom: { label: "Taproom" }
-};
-
-function setTheme(themeKey, { persist = true } = {}) {
-  const t = THEMES[themeKey] ? themeKey : "cozy";
-  document.documentElement.dataset.theme = t;
-  themeLabelEl.textContent = `Theme: ${THEMES[t].label}`;
-  if (persist) localStorage.setItem("jukebox_theme", t);
-}
-
-function initTheme() {
-  const params = new URLSearchParams(location.search);
-  const fromUrl = params.get("theme");          // ?theme=cozy|vintage|taproom
-  const fromStorage = localStorage.getItem("jukebox_theme");
-  setTheme(fromUrl || fromStorage || "cozy", { persist: !fromUrl });
-}
-
-function toggleTheme() {
-  const order = ["cozy", "vintage", "taproom"];
-  const current = document.documentElement.dataset.theme || "cozy";
-  const idx = order.indexOf(current);
-  const next = order[(idx + 1) % order.length];
-  setTheme(next);
-}
-
-
-    // ==== PKCE HELPERS (for Authorization Code with PKCE) ====
-    function generateRandomString(length) {
-      const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-      const values = window.crypto.getRandomValues(new Uint8Array(length));
-      return values.reduce((acc, x) => acc + possible[x % possible.length], "");
+    :root {
+      --frame-radius: 28px;
+
+      --bg: radial-gradient(circle at top left, #fef3e2 0%, #f8e1c4 40%, #f5d0c5 75%, #f2c9b4 100%);
+      --card-bg: rgba(255, 255, 255, 0.92);
+      --card-border: rgba(195, 167, 137, 0.45);
+      --shadow: 0 14px 35px rgba(112, 72, 40, 0.28);
+
+      --text: #4a3428;
+      --text-soft: #7b5b46;
+
+      --accent: #c47a4e;
+      --accent-2: #4a3428;
+
+      --btn-bg: #f7e5d1;
+      --btn-border: rgba(186, 152, 116, 0.9);
+      --btn-text: #2b1b12;
+
+      --eq-top: rgba(255,255,255,0.25);
+      --eq-bottom: var(--accent);
+
+      --placeholder: rgba(0,0,0,0.55);
+      --placeholder-sub: rgba(0,0,0,0.45);
+
+      /* vinyl */
+      --vinyl-opacity: 1;
+      --vinyl-base: rgba(0,0,0,0.92);
+      --vinyl-groove: rgba(255,255,255,0.10);
+      --vinyl-highlight: rgba(196, 122, 78, 0.25);
+      --vinyl-label:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), transparent 55%),
+        radial-gradient(circle at center, rgba(196,122,78,0.30), rgba(0,0,0,0.15));
+      --cover-shadow: 0 12px 28px rgba(60, 36, 20, 0.30);
     }
 
-    async function sha256(plain) {
-      const encoder = new TextEncoder();
-      const data = encoder.encode(plain);
-      return window.crypto.subtle.digest("SHA-256", data);
+    /* =========================
+       THEME: COZY (original vibe)
+       ========================= */
+    html[data-theme="cozy"] {
+      --bg: radial-gradient(circle at top left, #fef3e2 0%, #f8e1c4 40%, #f5d0c5 75%, #f2c9b4 100%);
+      --card-bg: rgba(255, 255, 255, 0.92);
+      --card-border: rgba(195, 167, 137, 0.45);
+      --shadow: 0 14px 35px rgba(112, 72, 40, 0.28);
+
+      --text: #4a3428;
+      --text-soft: #7b5b46;
+
+      --accent: #c47a4e;
+      --accent-2: #4a3428;
+
+      --btn-bg: #f7e5d1;
+      --btn-border: rgba(186, 152, 116, 0.9);
+      --btn-text: #2b1b12;
+
+      --eq-top: rgba(255,255,255,0.25);
+      --eq-bottom: var(--accent);
+
+      --placeholder: rgba(0,0,0,0.55);
+      --placeholder-sub: rgba(0,0,0,0.45);
     }
 
-    function base64encode(input) {
-      return btoa(String.fromCharCode(...new Uint8Array(input)))
-        .replace(/=/g, "")
-        .replace(/\+/g, "-")
-        .replace(/\//g, "_");
+    /* =========================
+       THEME: VINTAGE NEON JUKEBOX
+       ========================= */
+    html[data-theme="vintage"] {
+      --bg:
+        radial-gradient(circle at 20% 10%, rgba(60,241,255,0.30), transparent 55%),
+        radial-gradient(circle at 80% 25%, rgba(255,79,216,0.26), transparent 55%),
+        radial-gradient(circle at 45% 90%, rgba(255,232,90,0.22), transparent 55%),
+        linear-gradient(135deg, #050515 0%, #0a0a22 45%, #040410 100%);
+
+      --card-bg: rgba(10, 10, 28, 0.72);
+      --card-border: rgba(60,241,255,0.24);
+      --shadow: 0 22px 70px rgba(0,0,0,0.65);
+
+      --text: rgba(255,255,255,0.93);
+      --text-soft: rgba(255,255,255,0.72);
+
+      --accent: #3cf1ff;   /* neon cyan */
+      --accent-2: #ff4fd8; /* neon pink */
+
+      --btn-bg: linear-gradient(135deg, rgba(60,241,255,0.20), rgba(255,79,216,0.16));
+      --btn-border: rgba(255,232,90,0.40);
+      --btn-text: rgba(255,255,255,0.96);
+
+      --eq-top: rgba(255,255,255,0.10);
+      --eq-bottom: #ffe85a; /* neon yellow */
+
+      --placeholder: rgba(255,255,255,0.75);
+      --placeholder-sub: rgba(255,255,255,0.58);
+
+      --vinyl-groove: rgba(255,255,255,0.14);
+      --vinyl-highlight: rgba(60,241,255,0.25);
+      --vinyl-label:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), transparent 55%),
+        conic-gradient(from 210deg, #3cf1ff, #ff4fd8, #ffe85a, #3cf1ff);
+      --cover-shadow: 0 16px 44px rgba(0,0,0,0.60);
     }
 
-    async function createCodeChallenge(codeVerifier) {
-      const hashed = await sha256(codeVerifier);
-      return base64encode(hashed);
+    /* =========================
+       THEME: TAPROOM (bold brewery)
+       ========================= */
+    html[data-theme="taproom"] {
+      --bg:
+        radial-gradient(circle at 20% 10%, rgba(255,176,0,0.22), transparent 55%),
+        radial-gradient(circle at 85% 35%, rgba(45,226,197,0.18), transparent 55%),
+        radial-gradient(circle at 60% 95%, rgba(126,255,103,0.12), transparent 55%),
+        linear-gradient(135deg, #071014 0%, #0b151b 45%, #05090c 100%);
+
+      --card-bg: rgba(8, 12, 14, 0.74);
+      --card-border: rgba(255,176,0,0.30);
+      --shadow: 0 22px 70px rgba(0,0,0,0.68);
+
+      --text: rgba(255,255,255,0.92);
+      --text-soft: rgba(255,255,255,0.68);
+
+      --accent: #ffb000;   /* amber */
+      --accent-2: #2de2c5; /* teal */
+
+      --btn-bg: linear-gradient(135deg, rgba(255,176,0,0.22), rgba(45,226,197,0.12));
+      --btn-border: rgba(255,255,255,0.14);
+      --btn-text: rgba(255,255,255,0.96);
+
+      --eq-top: rgba(255,255,255,0.10);
+      --eq-bottom: #2de2c5; /* teal */
+
+      --placeholder: rgba(255,255,255,0.75);
+      --placeholder-sub: rgba(255,255,255,0.58);
+
+      --vinyl-highlight: rgba(255,176,0,0.24);
+      --vinyl-label:
+        radial-gradient(circle at 35% 30%, rgba(255,255,255,0.16), transparent 55%),
+        radial-gradient(circle at center, rgba(255,176,0,0.45), rgba(0,0,0,0.20));
     }
 
-    // ==== UI HANDLES ====
-    const loginButton = document.getElementById("loginButton");
-    const logoutButton = document.getElementById("logoutButton");
+    /* =========================
+       BASE LAYOUT
+       ========================= */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    const trackNameEl = document.getElementById("trackName");
-    const artistNameEl = document.getElementById("artistName");
-    const statusTextEl = document.getElementById("statusText");
-
-    const albumArtEl = document.getElementById("albumArt");
-    const albumPlaceholderEl = document.getElementById("albumPlaceholder");
-    const albumImgEl = document.getElementById("albumImg");
-
-    const eqBars = Array.from(document.querySelectorAll(".eq-bar"));
-
-    let accessToken = null;
-    let pollInterval = null;
-
-    let eqInterval = null;
-    function startEq() {
-      if (eqInterval) return;
-      eqInterval = setInterval(() => animateEqBars(true), 320);
-    }
-    function stopEq() {
-      if (eqInterval) {
-        clearInterval(eqInterval);
-        eqInterval = null;
-      }
-      animateEqBars(false);
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: "Nunito", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
-    // ==== AUTH FLOW (Authorization Code with PKCE) ====
-    async function loginWithSpotify() {
-      const codeVerifier = generateRandomString(64);
-      const codeChallenge = await createCodeChallenge(codeVerifier);
-      const state = generateRandomString(16);
-
-      // Save verifier & state locally
-      window.localStorage.setItem("spotify_code_verifier", codeVerifier);
-      window.localStorage.setItem("spotify_auth_state", state);
-
-      const authUrl = new URL("https://accounts.spotify.com/authorize");
-      const params = {
-        response_type: "code",
-        client_id: CLIENT_ID,
-        scope: SCOPES.join(" "),
-        redirect_uri: REDIRECT_URI,
-        state,
-        code_challenge_method: "S256",
-        code_challenge: codeChallenge
-      };
-
-      authUrl.search = new URLSearchParams(params).toString();
-      window.location = authUrl.toString();
+    body {
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2.2svh 2.2svw;
+      color: var(--text);
     }
 
-    async function exchangeCodeForToken(code, stateFromUrl) {
-      const savedState = window.localStorage.getItem("spotify_auth_state");
-      const codeVerifier = window.localStorage.getItem("spotify_code_verifier");
-
-      if (!codeVerifier) {
-        setLoggedOutUI("Auth error. Try logging in again.");
-        return false;
-      }
-
-      if (!savedState || savedState !== stateFromUrl) {
-        setLoggedOutUI("Auth error. Try logging in again.");
-        return false;
-      }
-
-      const body = new URLSearchParams({
-        client_id: CLIENT_ID,
-        grant_type: "authorization_code",
-        code,
-        redirect_uri: REDIRECT_URI,
-        code_verifier: codeVerifier
-      });
-
-      const res = await fetch("https://accounts.spotify.com/api/token", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        console.error("Token exchange error:", data);
-        setLoggedOutUI("Auth error. Try logging in again.");
-        return false;
-      }
-
-      accessToken = data.access_token;
-
-      // ✅ STORE REFRESH TOKEN (first exchange usually returns it)
-      if (data.refresh_token) {
-        window.localStorage.setItem("spotify_refresh_token", data.refresh_token);
-      }
-
-      const expiresIn = data.expires_in || 3600;
-      const expiryTime = Date.now() + expiresIn * 1000;
-
-      window.localStorage.setItem("spotify_access_token", accessToken);
-      window.localStorage.setItem("spotify_token_expires", expiryTime.toString());
-
-      // Clean up query params from URL
-      const newUrl = window.location.origin + window.location.pathname + window.location.hash;
-      window.history.replaceState({}, document.title, newUrl);
-
-      // Cleanup PKCE bits
-      window.localStorage.removeItem("spotify_auth_state");
-      window.localStorage.removeItem("spotify_code_verifier");
-
-      return true;
+    .frame {
+      width: min(1100px, 100%);
+      height: min(650px, 100svh);
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--frame-radius);
+      box-shadow: var(--shadow);
+      padding: 3svh 3svw;
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
+      grid-template-rows: auto 1fr auto;
+      gap: 2svh 3svw;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
     }
 
-    function tokenExpired() {
-      const expiry = window.localStorage.getItem("spotify_token_expires");
-      if (!expiry) return true;
-      const expiryTime = parseInt(expiry, 10);
-      return isNaN(expiryTime) || Date.now() > expiryTime;
+    .header {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid rgba(0,0,0,0.10);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.88rem;
+      color: var(--text-soft);
     }
 
-    // ✅ REFRESH ACCESS TOKEN (prevents re-login)
-    async function refreshAccessToken() {
-      const refreshToken = window.localStorage.getItem("spotify_refresh_token");
-      if (!refreshToken) return false;
-
-      const body = new URLSearchParams({
-        client_id: CLIENT_ID,
-        grant_type: "refresh_token",
-        refresh_token: refreshToken
-      });
-
-      const res = await fetch("https://accounts.spotify.com/api/token", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        console.error("Refresh token error:", data);
-        return false;
-      }
-
-      accessToken = data.access_token;
-
-      const expiresIn = data.expires_in || 3600;
-      window.localStorage.setItem("spotify_access_token", accessToken);
-      window.localStorage.setItem("spotify_token_expires", (Date.now() + expiresIn * 1000).toString());
-
-      // Sometimes Spotify may return a new refresh token
-      if (data.refresh_token) {
-        window.localStorage.setItem("spotify_refresh_token", data.refresh_token);
-      }
-
-      return true;
+    html[data-theme="vintage"] .header,
+    html[data-theme="taproom"] .header {
+      border-bottom-color: rgba(255,255,255,0.12);
     }
 
-    function clearTokens() {
-      window.localStorage.removeItem("spotify_access_token");
-      window.localStorage.removeItem("spotify_token_expires");
-      window.localStorage.removeItem("spotify_refresh_token");
-      accessToken = null;
+    .header .mini {
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      opacity: 0.85;
+      white-space: nowrap;
     }
 
-    // ==== SPOTIFY NOW PLAYING POLLING ====
-    async function fetchCurrentlyPlaying() {
-      if (!accessToken) return;
-
-      try {
-        const res = await fetch("https://api.spotify.com/v1/me/player/currently-playing", {
-          headers: { Authorization: "Bearer " + accessToken }
-        });
-
-        if (res.status === 204) {
-          showNothingPlaying("No active playback. Start Spotify on any device.");
-          return;
-        }
-
-        if (res.status === 401) {
-          // ✅ Try refresh once, then retry
-          const ok = await refreshAccessToken();
-          if (ok) return fetchCurrentlyPlaying();
-
-          clearTokens();
-          stopPolling();
-          setLoggedOutUI("Session expired. Tap 'Login with Spotify' again.");
-          return;
-        }
-
-        if (!res.ok) {
-          console.error("Spotify error:", await res.text());
-          return;
-        }
-
-        const data = await res.json();
-        if (!data || !data.item) {
-          showNothingPlaying("No active playback. Start Spotify on any device.");
-          return;
-        }
-
-        updateTrackUI(data);
-      } catch (err) {
-        console.error("Error fetching currently playing:", err);
-      }
+    /* =========================
+       ALBUM + VINYL (CENTERED)
+       ========================= */
+    .album-art-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    function updateTrackUI(data) {
-      const track = data.item;
-      const isPlaying = !!data.is_playing;
-
-      const trackName = track.name || "—";
-      const artists = (track.artists || []).map(a => a.name).join(", ") || "—";
-      const albumImages = track.album?.images || [];
-      const bestImage = albumImages[0];
-
-      trackNameEl.textContent = trackName;
-      artistNameEl.textContent = artists;
-
-      if (bestImage?.url) {
-        albumImgEl.src = bestImage.url;
-        albumImgEl.alt = `${trackName} - ${artists}`;
-        albumImgEl.style.display = "block";
-        albumPlaceholderEl.style.display = "none";
-      } else {
-        albumImgEl.removeAttribute("src");
-        albumImgEl.style.display = "none";
-        albumPlaceholderEl.style.display = "flex";
-      }
-
-      statusTextEl.textContent = isPlaying
-        ? "Playing now on Spotify"
-        : "Paused";
-
-      // Vinyl + EQ behavior
-      if (isPlaying) {
-        albumArtEl.classList.add("spinning");
-        startEq();
-      } else {
-        albumArtEl.classList.remove("spinning");
-        stopEq();
-      }
+    .album-art {
+      width: min(100%, 380px);
+      aspect-ratio: 1 / 1;
+      border-radius: 26px;
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(0,0,0,0.10);
+      background: rgba(0,0,0,0.05);
     }
 
-    function showNothingPlaying(message) {
-      trackNameEl.textContent = "—";
-      artistNameEl.textContent = "—";
-      albumPlaceholderEl.style.display = "flex";
-      albumImgEl.removeAttribute("src");
-      albumImgEl.style.display = "none";
-      statusTextEl.textContent = message || "No active playback.";
-      albumArtEl.classList.remove("spinning");
-      stopEq();
+    html[data-theme="vintage"] .album-art,
+    html[data-theme="taproom"] .album-art {
+      border-color: rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06);
     }
 
-    function animateEqBars(isPlaying) {
-      eqBars.forEach(bar => {
-        if (!isPlaying) {
-          bar.style.transform = "scaleY(0.25)";
-          return;
-        }
-        const scale = 0.25 + Math.random() * 0.85;
-        bar.style.transform = `scaleY(${scale.toFixed(2)})`;
-      });
+    .vinyl {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 94%;
+      height: 94%;
+      transform: translate(-50%, -50%);
+      border-radius: 999px;
+      opacity: var(--vinyl-opacity);
+      pointer-events: none;
+      box-shadow: 0 18px 48px rgba(0,0,0,0.55);
+      background:
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.20) 0 2.2%, transparent 2.2% 100%),
+        radial-gradient(circle at 50% 50%, var(--vinyl-highlight) 0 9%, transparent 9% 100%),
+        radial-gradient(circle at 50% 50%, rgba(0,0,0,0.55) 0 13%, var(--vinyl-base) 28%, rgba(0,0,0,0.98) 100%),
+        repeating-radial-gradient(circle at 50% 50%, var(--vinyl-groove) 0 1px, rgba(255,255,255,0.00) 2px 7px);
+      filter: saturate(1.05) contrast(1.08);
     }
 
-    function startPolling() {
-      if (pollInterval) return;
-      pollInterval = setInterval(fetchCurrentlyPlaying, 5000);
-      fetchCurrentlyPlaying();
+    .vinyl::after {
+      content: "";
+      position: absolute;
+      inset: 38%;
+      border-radius: 999px;
+      background: var(--vinyl-label);
+      border: 1px solid rgba(255,255,255,0.10);
     }
 
-    function stopPolling() {
-      if (pollInterval) {
-        clearInterval(pollInterval);
-        pollInterval = null;
-      }
+    #albumImg {
+      width: 74%;
+      height: 74%;
+      object-fit: cover;
+      border-radius: 18px;
+      position: relative;
+      z-index: 2;
+      display: none;
+      box-shadow: var(--cover-shadow);
+      border: 1px solid rgba(255,255,255,0.14);
     }
 
-    function setLoggedOutUI(message) {
-      loginButton.style.display = "inline-flex";
-      statusTextEl.textContent = message || "Connect to Spotify and start playing music.";
-      showNothingPlaying(message || "Connect to Spotify and start playing music.");
+    .album-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 1.5rem;
+      z-index: 3;
+      position: relative;
+      color: var(--placeholder);
     }
 
-    function setLoggedInUI() {
-      loginButton.style.display = "none";
-      statusTextEl.textContent = "Connected. Start playing any track on Spotify.";
+    .album-placeholder span {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      margin-top: 0.75rem;
+      color: var(--placeholder-sub);
     }
 
-    // ==== INIT FLOW ====
-    (async function init() {
-      initTheme();
+    @keyframes spinDisc {
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to   { transform: translate(-50%, -50%) rotate(360deg); }
+    }
 
-      loginButton.addEventListener("click", loginWithSpotify);
-      themeButton.addEventListener("click", toggleTheme);
+    .album-art.spinning .vinyl {
+      animation: spinDisc 2.8s linear infinite;
+    }
 
-      logoutButton.addEventListener("click", () => {
-        clearTokens();
-        stopPolling();
-        setLoggedOutUI("Logged out. Tap 'Login with Spotify' to reconnect.");
-      });
+    /* =========================
+       META
+       ========================= */
+    .meta {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1rem;
+    }
 
-      // 1) Check if redirected back with ?code=...
-      const urlParams = new URLSearchParams(window.location.search);
-      const code = urlParams.get("code");
-      const state = urlParams.get("state");
-      const error = urlParams.get("error");
+    .label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--text-soft);
+    }
 
-      if (error) {
-        console.error("Spotify auth error:", error);
-        setLoggedOutUI("Auth error. Try logging in again.");
-        return;
-      }
+    .track {
+      font-size: 2.2rem;
+      line-height: 1.15;
+      font-weight: 700;
+      color: var(--text);
+      font-family: "DM Serif Display", "Nunito", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
 
-      if (code) {
-        const ok = await exchangeCodeForToken(code, state);
-        if (!ok) return;
-      }
+    .artist {
+      font-size: 1.3rem;
+      color: var(--text-soft);
+    }
 
-      // 2) Check stored token
-      const storedToken = window.localStorage.getItem("spotify_access_token");
+    .status {
+      font-size: 0.98rem;
+      color: var(--text-soft);
+      opacity: 0.95;
+    }
 
-      // ✅ If missing/expired, try refresh automatically before showing login
-      if (!storedToken || tokenExpired()) {
-        const ok = await refreshAccessToken();
-        if (!ok) {
-          setLoggedOutUI();
-          return;
-        }
-      }
+    /* =========================
+       CONTROLS
+       ========================= */
+    .controls {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-top: 0.4rem;
+    }
 
-      accessToken = window.localStorage.getItem("spotify_access_token");
-      if (!accessToken) {
-        setLoggedOutUI();
-        return;
-      }
+    .btn-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
 
-      setLoggedInUI();
-      startPolling();
-    })();
-  </script>
-</body>
-</html>
-
-
-
+    .pill-btn {
+      padding: 0.72rem 1.15rem;
+      border-radius: 999px;
+      border
