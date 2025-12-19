@@ -981,46 +981,86 @@ html[data-theme="taproom"] body::after{
   from { transform: translate3d(-1.5%, -1%, 0) scale(1.02) rotate(-0.3deg); }
   to   { transform: translate3d( 1.5%,  1%, 0) scale(1.02) rotate(0.3deg); }
 }
+/* =========================================================
+   Silk / Fire TV portrait engine (CENTER ROTATE)
+   ========================================================= */
 #viewport{
-position: fixed;
-inset: 0;
-overflow: hidden;
-background: transparent;
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: transparent;
 }
 
-
-/* Default (already portrait-capable) */
 #app{
-width: 100vw;
-height: 100vh;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100vw;
+  height: 100vh;
+  transform: translate(-50%, -50%);
+  transform-origin: center;
 }
 
-
-/* When we need to rotate (landscape viewport but you want portrait UI) */
+/* IMPORTANT: rotation direction (change -90deg to 90deg if needed) */
 html.force-portrait #app{
-/* After rotation, the logical width becomes vh, and height becomes vw */
-width: 100vh;
-height: 100vw;
-
-
-position: absolute;
-top: 0;
-left: 0;
-
-
-transform-origin: top left;
-
-
-/* Rotate 90deg clockwise and pull it into view */
-transform: rotate(90deg) translateY(-100vh);
+  width: 100vh;   /* swapped */
+  height: 100vw;  /* swapped */
+  transform: translate(-50%, -50%) rotate(-90deg);
 }
 
+/* Force your PORTRAIT layout even when the browser reports landscape */
+html.force-portrait body{ padding: 0; }
 
-/* Make sure your existing overlays never block clicks */
+html.force-portrait .frame{
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto 1fr auto;
+  gap: 2.4svh 0;
+  padding: 4svh 6vw;
+}
+
+html.force-portrait .album-art{
+  width: min(86vw, 560px);
+  border-radius: 30px;
+}
+
+html.force-portrait .track{
+  font-size: clamp(2.0rem, 4.8vw, 2.9rem);
+}
+
+html.force-portrait .artist{
+  font-size: clamp(1.15rem, 3.4vw, 1.6rem);
+}
+
+html.force-portrait .controls{
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1.2rem;
+}
+
+html.force-portrait .btn-row{
+  justify-content: space-between;
+}
+
+html.force-portrait .eq-bars{
+  width: 100%;
+  height: 36px;
+  justify-content: space-between;
+}
+
+html.force-portrait .eq-bar{
+  max-width: 10px;
+  flex: 0 0 10px;
+}
+
+/* keep overlays from blocking clicks */
 body::before,
 body::after{
-pointer-events: none;
+  pointer-events: none;
 }
+
     
   </style>
 </head>
@@ -1143,22 +1183,15 @@ pointer-events: none;
 
 // ==== FORCE PORTRAIT (Silk/FireTV) ====
 function applyForcePortrait(){
-// If the browser viewport is landscape, but your physical screen is portrait,
-// rotate the app into portrait.
-const vw = window.innerWidth;
-const vh = window.innerHeight;
-
-
-// Treat landscape viewport as “needs rotation”
-const needsRotation = vw > vh;
-
-
-document.documentElement.classList.toggle('force-portrait', needsRotation);
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+  const needsRotation = vw > vh; // Silk landscape viewport
+  document.documentElement.classList.toggle('force-portrait', needsRotation);
 }
-
 
 window.addEventListener('resize', applyForcePortrait);
 window.addEventListener('orientationchange', applyForcePortrait);
+
     
     // ==== THEME SWITCHER ====
     const THEMES = {
@@ -1531,6 +1564,7 @@ window.addEventListener('orientationchange', applyForcePortrait);
   </script>
 </body>
 </html>
+
 
 
 
