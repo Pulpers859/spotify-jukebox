@@ -729,6 +729,104 @@ html[data-theme="vintage"] .pill-btn:hover{
 html[data-theme="vintage"] .eq-bar{
   background: linear-gradient(to top, rgba(255,255,255,0.06), #ff00d6);
 }
+/* =========================================================
+   TAPROOM = WOODSY / OUTDOORSY / FUN / LIGHT
+   ========================================================= */
+
+html[data-theme="taproom"]{
+  /* Sun + sky + meadow */
+  --bg:
+    radial-gradient(circle at 18% 12%, rgba(255, 214, 102, 0.65), transparent 55%),
+    radial-gradient(circle at 80% 18%, rgba(140, 216, 255, 0.55), transparent 58%),
+    radial-gradient(circle at 55% 92%, rgba(167, 239, 186, 0.55), transparent 62%),
+    linear-gradient(135deg, #f7fbff 0%, #fff3dc 38%, #eef9f0 100%);
+
+  /* Lighter card like a menu board */
+  --card-bg: rgba(255, 255, 255, 0.88);
+  --card-border: rgba(120, 86, 52, 0.28);
+  --shadow: 0 18px 55px rgba(30, 30, 30, 0.18);
+
+  /* Text */
+  --text: #1f2a22;
+  --text-soft: rgba(31, 42, 34, 0.72);
+
+  /* Accents: hop green + warm amber */
+  --accent: #2e7d4f;     /* hop green */
+  --eq-bottom: #f4a51c;  /* sunshine amber */
+  --eq-top: rgba(31,42,34,0.10);
+
+  /* Buttons: wood + light */
+  --btn-bg: linear-gradient(180deg, rgba(255,255,255,0.82), rgba(255,255,255,0.62));
+  --btn-border: rgba(120, 86, 52, 0.30);
+  --btn-text: #1f2a22;
+
+  /* Vinyl: keep subtle so it doesn’t look clubby */
+  --vinyl-base: rgba(18,18,18,0.90);
+  --vinyl-groove: rgba(255,255,255,0.09);
+  --vinyl-highlight: rgba(46,125,79,0.20);
+  --vinyl-label:
+    radial-gradient(circle at 35% 30%, rgba(255,255,255,0.20), transparent 55%),
+    radial-gradient(circle at center, rgba(244,165,28,0.55), rgba(0,0,0,0.10));
+
+  --cover-shadow: 0 16px 40px rgba(0,0,0,0.22);
+
+  /* Softer vignette (since it’s light) */
+  --vignette: radial-gradient(circle at 50% 35%, transparent 0%, rgba(0,0,0,0.06) 70%, rgba(0,0,0,0.08) 100%);
+}
+
+/* Woodgrain layer inside the frame (subtle, fun, not “cheap”) */
+html[data-theme="taproom"] .frame{
+  background:
+    radial-gradient(circle at 25% 15%, rgba(255, 214, 102, 0.18), transparent 42%),
+    radial-gradient(circle at 85% 25%, rgba(140, 216, 255, 0.14), transparent 48%),
+    linear-gradient(180deg, rgba(255,255,255,0.92), rgba(255,255,255,0.78)),
+    repeating-linear-gradient(
+      90deg,
+      rgba(120,86,52,0.05) 0px,
+      rgba(120,86,52,0.02) 8px,
+      rgba(255,255,255,0.00) 18px,
+      rgba(120,86,52,0.03) 26px
+    );
+  border-color: rgba(120,86,52,0.26);
+}
+
+/* Header: playful “outdoor sign” glow */
+html[data-theme="taproom"] .header{
+  border-bottom-color: rgba(31,42,34,0.12);
+  text-shadow: 0 0 10px rgba(46,125,79,0.10);
+}
+
+/* Album bezel feels like a clean coaster / patio table */
+html[data-theme="taproom"] .album-art{
+  background:
+    radial-gradient(circle at 50% 30%, rgba(255,255,255,0.65), transparent 55%),
+    rgba(255,255,255,0.55);
+  border-color: rgba(31,42,34,0.14);
+  box-shadow: 0 18px 55px rgba(0,0,0,0.16);
+}
+
+/* Buttons: slightly “wood + sun” hover */
+html[data-theme="taproom"] .pill-btn:hover{
+  border-color: rgba(46,125,79,0.35);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+}
+
+/* EQ: brighter and fun */
+html[data-theme="taproom"] .eq-bar{
+  background: linear-gradient(to top, rgba(31,42,34,0.08), #f4a51c);
+}
+
+/* Optional: little “hop sparkle” under track name (subtle) */
+html[data-theme="taproom"] .track::after{
+  content:"";
+  display:block;
+  width: min(360px, 70%);
+  height: 3px;
+  margin-top: 12px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(46,125,79,0.95), rgba(244,165,28,0.90), rgba(140,216,255,0.70));
+  opacity: 0.55;
+}
 
     
   </style>
@@ -1176,5 +1274,6 @@ html[data-theme="vintage"] .eq-bar{
   </script>
 </body>
 </html>
+
 
 
