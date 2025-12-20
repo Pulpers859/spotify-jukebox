@@ -1,243 +1,293 @@
 <script>
+(() => {
+  "use strict";
+
   // ==========================
   // Funcleson Jukebox (Last.fm-only)
-  // Spotify plays anywhere → Finale scrobbles → Last.fm feeds this board
+  // Shows Spotify playback via Finale → Last.fm scrobbling
   // ==========================
 
   // ===== Last.fm CONFIG =====
   const LASTFM_USER = "funcleson";
   const LASTFM_API_KEY = "529379aa6bef76cade9e86686d64e75f";
-  const POLL_MS = 6500; // refresh cadence
+  const POLL_MS = 6500;
 
-  // ===== UI =====
-  const themeButton  = document.getElementById("themeButton");
-  const themeLabelEl = document.getElementById("themeLabel");
+  // ===== Error overlay for Silk (so blank screens aren't mysteries) =====
+  function installErrorOverlay() {
+    const el = document.createElement("div");
+    el.id = "debugOverlay";
+    el.style.cssText = `
+      position: fixed; left: 16px; right: 16px; top: 16px;
+      z-index: 999999; padding: 12px 14px; border-radius: 12px;
+      background: rgba(0,0,0,0.78); color: #fff; font: 14px/1.35 monospace;
+      display: none; white-space: pre-wrap; word-break: break-word;
+      max-height: 40vh; overflow: auto;
+    `;
+    el.textContent = "";
+    document.body.appendChild(el);
 
-  const trackNameEl = document.getElementById("trackName");
-  const artistNameEl = document.getElementById("artistName");
-  const statusTextEl = document.getElementById("statusText");
-  const placeholderHintEl = document.getElementById("placeholderHint");
+    function show(msg) {
+      el.style.display = "block";
+      el.textContent = msg;
+    }
 
-  const albumArtEl = document.getElementById("albumArt");
-  const albumPlaceholderEl = document.getElementById("albumPlaceholder");
-  const albumImgEl = document.getElementById("albumImg");
-  const eqBars = Array.from(document.querySelectorAll(".eq-bar"));
-
-  // ===== Silk portrait detection =====
-  function applyForcePortrait(){
-    const vw = window.innerWidth;
-    const vh = window.innerHeight;
-    document.documentElement.classList.toggle("force-portrait", vw > vh);
-  }
-  window.addEventListener("resize", applyForcePortrait);
-  window.addEventListener("orientationchange", applyForcePortrait);
-
-  // ===== Theme switcher =====
-  const THEMES = {
-    cozy:    { label: "Cozy" },
-    vintage: { label: "Vintage Neon" },
-    taproom: { label: "Taproom" }
-  };
-
-  function setTheme(themeKey, { persist = true } = {}) {
-    const t = THEMES[themeKey] ? themeKey : "cozy";
-    document.documentElement.dataset.theme = t;
-    themeLabelEl.textContent = `Theme: ${THEMES[t].label}`;
-    if (persist) localStorage.setItem("jukebox_theme", t);
-  }
-
-  function initTheme(){
-    const params = new URLSearchParams(location.search);
-    const fromUrl = params.get("theme");
-    const fromStorage = localStorage.getItem("jukebox_theme");
-    setTheme(fromUrl || fromStorage || "cozy", { persist: !fromUrl });
-  }
-
-  function toggleTheme(){
-    const order = ["cozy","vintage","taproom"];
-    const current = document.documentElement.dataset.theme || "cozy";
-    const idx = order.indexOf(current);
-    setTheme(order[(idx + 1) % order.length]);
-  }
-
-  // ===== EQ =====
-  let eqInterval = null;
-  function animateEqBars(isPlaying){
-    eqBars.forEach(bar => {
-      if (!isPlaying){
-        bar.style.transform = "scaleY(0.25)";
-        return;
-      }
-      const scale = 0.25 + Math.random() * 0.85;
-      bar.style.transform = `scaleY(${scale.toFixed(2)})`;
+    window.addEventListener("error", (e) => {
+      show(`JS ERROR:\n${e.message}\n${e.filename || ""}:${e.lineno || ""}:${e.colno || ""}`);
     });
-  }
-  function startEq(){
-    if (eqInterval) return;
-    eqInterval = setInterval(() => animateEqBars(true), 320);
-  }
-  function stopEq(){
-    if (eqInterval){
-      clearInterval(eqInterval);
-      eqInterval = null;
-    }
-    animateEqBars(false);
-  }
 
-  // ===== Unified renderer =====
-  function renderNowPlaying({ trackName, artistName, artworkUrl, isPlaying, status, hint }){
-    trackNameEl.textContent = trackName || "—";
-    artistNameEl.textContent = artistName || "—";
-
-    if (artworkUrl){
-      albumImgEl.src = artworkUrl;
-      albumImgEl.alt = `${trackName || ""} - ${artistName || ""}`.trim();
-      albumImgEl.style.display = "block";
-      albumPlaceholderEl.style.display = "none";
-    } else {
-      albumImgEl.removeAttribute("src");
-      albumImgEl.style.display = "none";
-      albumPlaceholderEl.style.display = "flex";
-    }
-
-    if (hint) placeholderHintEl.textContent = hint;
-
-    statusTextEl.textContent = status || (isPlaying ? "Playing" : "Paused");
-
-    if (isPlaying){
-      albumArtEl.classList.add("playing");
-      startEq();
-    } else {
-      albumArtEl.classList.remove("playing");
-      stopEq();
-    }
-  }
-
-  function showNothingPlaying(message, hint){
-    renderNowPlaying({
-      trackName: "—",
-      artistName: "—",
-      artworkUrl: "",
-      isPlaying: false,
-      status: message || "No active playback.",
-      hint: hint || "Start Spotify on any device (Finale → Last.fm)"
+    window.addEventListener("unhandledrejection", (e) => {
+      const reason = (e && e.reason) ? (e.reason.stack || e.reason.message || String(e.reason)) : "unknown";
+      show(`PROMISE REJECTION:\n${reason}`);
     });
+
+    return { show };
   }
 
   // ===== Helpers =====
+  function $(id){ return document.getElementById(id); }
   function encodeTerm(s){ return encodeURIComponent((s || "").trim()); }
 
-  async function fetchItunesArtwork(trackName, artistName){
-    try{
-      const term = `${trackName} ${artistName}`.trim();
-      const url = `https://itunes.apple.com/search?term=${encodeTerm(term)}&limit=1&media=music`;
-      const res = await fetch(url, { cache: "no-store" });
-      const data = await res.json();
-      const art = data?.results?.[0]?.artworkUrl100;
-      if (!art) return "";
-      return art.replace(/100x100/g, "600x600");
-    } catch {
-      return "";
+  // ===== Main init =====
+  function init() {
+    const overlay = installErrorOverlay();
+
+    // --- Grab UI (guarded) ---
+    const themeButton  = $("themeButton");
+    const themeLabelEl = $("themeLabel");
+
+    const trackNameEl = $("trackName");
+    const artistNameEl = $("artistName");
+    const statusTextEl = $("statusText");
+    const placeholderHintEl = $("placeholderHint");
+
+    const albumArtEl = $("albumArt");
+    const albumPlaceholderEl = $("albumPlaceholder");
+    const albumImgEl = $("albumImg");
+    const eqBars = Array.from(document.querySelectorAll(".eq-bar"));
+
+    // If your HTML is missing key IDs, show it clearly instead of going blank.
+    const required = [
+      ["themeLabel", themeLabelEl],
+      ["trackName", trackNameEl],
+      ["artistName", artistNameEl],
+      ["statusText", statusTextEl],
+      ["placeholderHint", placeholderHintEl],
+      ["albumArt", albumArtEl],
+      ["albumPlaceholder", albumPlaceholderEl],
+      ["albumImg", albumImgEl],
+    ];
+    const missing = required.filter(([_, el]) => !el).map(([name]) => name);
+    if (missing.length) {
+      overlay.show(
+        `MISSING ELEMENT IDs:\n- ${missing.join("\n- ")}\n\n` +
+        `Your HTML still needs these elements with these exact id="" values.`
+      );
+      // Still continue; but rendering won’t work without these.
     }
-  }
 
-  // ===== Last.fm polling =====
-  async function fetchLastFmNowPlaying(){
-    const url =
-      `https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks` +
-      `&user=${encodeTerm(LASTFM_USER)}` +
-      `&api_key=${encodeTerm(LASTFM_API_KEY)}` +
-      `&limit=1&format=json`;
-
-    const res = await fetch(url, { cache: "no-store" });
-    if (!res.ok) throw new Error(`Last.fm HTTP ${res.status}`);
-    const data = await res.json();
-
-    const track = data?.recenttracks?.track?.[0];
-    if (!track) return null;
-
-    const trackName = track?.name || "—";
-    const artistName = track?.artist?.["#text"] || "—";
-    const nowPlaying = track?.["@attr"]?.nowplaying === "true";
-
-    const lastfmImg =
-      track?.image?.slice?.(-1)?.[0]?.["#text"] ||
-      track?.image?.find?.(i => i.size === "extralarge")?.["#text"] ||
-      "";
-
-    const artworkUrl = lastfmImg || await fetchItunesArtwork(trackName, artistName);
-
-    return {
-      trackName,
-      artistName,
-      artworkUrl: artworkUrl || "",
-      isPlaying: nowPlaying,
-      status: "Spotify (via Last.fm)",
-      hint: "Start Spotify on any device (Finale → Last.fm)"
-    };
-  }
-
-  let pollInterval = null;
-
-  async function tick(){
-    try{
-      const info = await fetchLastFmNowPlaying();
-      if (!info){
-        showNothingPlaying("No recent scrobbles yet.", "Start Spotify on any device (Finale → Last.fm)");
-        return;
-      }
-
-      // If Last.fm says "not nowplaying", we still show the last track,
-      // but pause the EQ/wave so it doesn't look like it's actively playing.
-      renderNowPlaying(info);
-
-      // If it's NOT actively playing, keep the status but stop animation.
-      if (!info.isPlaying){
-        albumArtEl.classList.remove("playing");
-        stopEq();
-        statusTextEl.textContent = "Last scrobble (not live playback)";
-      }
-    } catch (e){
-      console.error("Last.fm tick error:", e);
-      showNothingPlaying("Connection hiccup. Retrying…", "Start Spotify on any device (Finale → Last.fm)");
+    // ===== Silk portrait detection =====
+    function applyForcePortrait(){
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      document.documentElement.classList.toggle("force-portrait", vw > vh);
     }
-  }
-
-  function startPolling(){
-    if (pollInterval) return;
-    pollInterval = setInterval(tick, POLL_MS);
-    tick();
-  }
-
-  function stopPolling(){
-    if (pollInterval){
-      clearInterval(pollInterval);
-      pollInterval = null;
-    }
-  }
-
-  // ===== init =====
-  (function init(){
+    window.addEventListener("resize", applyForcePortrait);
+    window.addEventListener("orientationchange", applyForcePortrait);
     applyForcePortrait();
+
+    // ===== Theme switcher =====
+    const THEMES = {
+      cozy:    { label: "Cozy" },
+      vintage: { label: "Vintage Neon" },
+      taproom: { label: "Taproom" }
+    };
+
+    function setTheme(themeKey, { persist = true } = {}) {
+      const t = THEMES[themeKey] ? themeKey : "cozy";
+      document.documentElement.dataset.theme = t;
+      if (themeLabelEl) themeLabelEl.textContent = `Theme: ${THEMES[t].label}`;
+      if (persist) localStorage.setItem("jukebox_theme", t);
+    }
+
+    function initTheme(){
+      const params = new URLSearchParams(location.search);
+      const fromUrl = params.get("theme");
+      const fromStorage = localStorage.getItem("jukebox_theme");
+      setTheme(fromUrl || fromStorage || "cozy", { persist: !fromUrl });
+    }
+
+    function toggleTheme(){
+      const order = ["cozy","vintage","taproom"];
+      const current = document.documentElement.dataset.theme || "cozy";
+      const idx = order.indexOf(current);
+      setTheme(order[(idx + 1) % order.length]);
+    }
+
     initTheme();
+    if (themeButton) themeButton.addEventListener("click", toggleTheme);
 
-    themeButton.addEventListener("click", toggleTheme);
+    // ===== EQ =====
+    let eqInterval = null;
 
-    // initial UI state
-    showNothingPlaying("Waiting for scrobbles…", "Start Spotify on any device (Finale → Last.fm)");
+    function animateEqBars(isPlaying){
+      eqBars.forEach(bar => {
+        if (!isPlaying){
+          bar.style.transform = "scaleY(0.25)";
+          return;
+        }
+        const scale = 0.25 + Math.random() * 0.85;
+        bar.style.transform = `scaleY(${scale.toFixed(2)})`;
+      });
+    }
 
-    // go
-    startPolling();
+    function startEq(){
+      if (eqInterval) return;
+      eqInterval = setInterval(() => animateEqBars(true), 320);
+    }
 
-    // Optional: pause polling when tab hidden (Silk can be weird; safe either way)
-    document.addEventListener("visibilitychange", () => {
-      if (document.hidden) {
-        // Keep polling in Silk if you prefer; comment these 2 lines out to keep always-on.
-        stopPolling();
-        stopEq();
-      } else {
-        startPolling();
+    function stopEq(){
+      if (eqInterval){
+        clearInterval(eqInterval);
+        eqInterval = null;
       }
-    });
-  })();
+      animateEqBars(false);
+    }
+
+    // ===== Renderer =====
+    function renderNowPlaying({ trackName, artistName, artworkUrl, isPlaying, status, hint }){
+      if (trackNameEl) trackNameEl.textContent = trackName || "—";
+      if (artistNameEl) artistNameEl.textContent = artistName || "—";
+
+      if (albumImgEl && albumPlaceholderEl){
+        if (artworkUrl){
+          albumImgEl.src = artworkUrl;
+          albumImgEl.alt = `${trackName || ""} - ${artistName || ""}`.trim();
+          albumImgEl.style.display = "block";
+          albumPlaceholderEl.style.display = "none";
+        } else {
+          albumImgEl.removeAttribute("src");
+          albumImgEl.style.display = "none";
+          albumPlaceholderEl.style.display = "flex";
+        }
+      }
+
+      if (placeholderHintEl && hint) placeholderHintEl.textContent = hint;
+      if (statusTextEl) statusTextEl.textContent = status || (isPlaying ? "Playing" : "Paused");
+
+      if (albumArtEl){
+        if (isPlaying){
+          albumArtEl.classList.add("playing");
+          startEq();
+        } else {
+          albumArtEl.classList.remove("playing");
+          stopEq();
+        }
+      }
+    }
+
+    function showNothingPlaying(message, hint){
+      renderNowPlaying({
+        trackName: "—",
+        artistName: "—",
+        artworkUrl: "",
+        isPlaying: false,
+        status: message || "Waiting for scrobbles…",
+        hint: hint || "Start Spotify on any device (Finale → Last.fm)"
+      });
+    }
+
+    // ===== Artwork fallback (iTunes) =====
+    async function fetchItunesArtwork(trackName, artistName){
+      try{
+        const term = `${trackName} ${artistName}`.trim();
+        const url = `https://itunes.apple.com/search?term=${encodeTerm(term)}&limit=1&media=music`;
+        const res = await fetch(url);
+        const data = await res.json();
+        const art = data?.results?.[0]?.artworkUrl100;
+        if (!art) return "";
+        return art.replace(/100x100/g, "600x600");
+      } catch {
+        return "";
+      }
+    }
+
+    // ===== Last.fm fetch =====
+    async function fetchLastFmNowPlaying(){
+      const url =
+        `https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks` +
+        `&user=${encodeTerm(LASTFM_USER)}` +
+        `&api_key=${encodeTerm(LASTFM_API_KEY)}` +
+        `&limit=1&format=json`;
+
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`Last.fm HTTP ${res.status}`);
+      const data = await res.json();
+
+      const track = data?.recenttracks?.track?.[0];
+      if (!track) return null;
+
+      const trackName = track?.name || "—";
+      const artistName = track?.artist?.["#text"] || "—";
+      const nowPlaying = track?.["@attr"]?.nowplaying === "true";
+
+      const lastfmImg =
+        track?.image?.slice?.(-1)?.[0]?.["#text"] ||
+        track?.image?.find?.(i => i.size === "extralarge")?.["#text"] ||
+        "";
+
+      const artworkUrl = lastfmImg || await fetchItunesArtwork(trackName, artistName);
+
+      return {
+        trackName,
+        artistName,
+        artworkUrl: artworkUrl || "",
+        isPlaying: nowPlaying,
+        status: "Spotify (via Last.fm)",
+        hint: "Start Spotify on any device (Finale → Last.fm)"
+      };
+    }
+
+    // ===== Poll loop =====
+    let pollInterval = null;
+
+    async function tick(){
+      try{
+        const info = await fetchLastFmNowPlaying();
+        if (!info){
+          showNothingPlaying("No recent scrobbles yet.", "Start Spotify on any device (Finale → Last.fm)");
+          return;
+        }
+
+        renderNowPlaying(info);
+
+        // If not live nowplaying, show last scrobble without animation
+        if (!info.isPlaying && statusTextEl){
+          if (albumArtEl) albumArtEl.classList.remove("playing");
+          stopEq();
+          statusTextEl.textContent = "Last scrobble (not live playback)";
+        }
+      } catch (e){
+        console.error(e);
+        showNothingPlaying("Last.fm fetch failed. Retrying…", "Start Spotify on any device (Finale → Last.fm)");
+      }
+    }
+
+    function startPolling(){
+      if (pollInterval) return;
+      pollInterval = setInterval(tick, POLL_MS);
+      tick();
+    }
+
+    // Start with something on-screen immediately
+    showNothingPlaying("Waiting for scrobbles…", "Start Spotify on any device (Finale → Last.fm)");
+    startPolling();
+  }
+
+  // Run safely even if script is in <head>
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
 </script>
