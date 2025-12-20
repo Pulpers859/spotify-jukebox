@@ -44,50 +44,67 @@
        THEMES
        ========================= */
     html[data-theme="cozy"]{
-      --bg: radial-gradient(circle at top left, #fef3e2 0%, #f8e1c4 40%, #f5d0c5 75%, #f2c9b4 100%);
-      --card-bg: rgba(255, 255, 255, 0.92);
-      --card-border: rgba(195, 167, 137, 0.45);
-      --shadow: 0 14px 35px rgba(112, 72, 40, 0.28);
+  /* Cozy: warm latte -> blush -> dusk */
+  --bg:
+    radial-gradient(circle at 18% 12%, rgba(255, 244, 226, 0.95), transparent 55%),
+    radial-gradient(circle at 82% 22%, rgba(255, 214, 225, 0.55), transparent 58%),
+    radial-gradient(circle at 55% 88%, rgba(245, 208, 175, 0.45), transparent 62%),
+    linear-gradient(135deg, #f7efe6 0%, #f2ddd2 45%, #ead2c6 100%);
 
-      --text: #4a3428;
-      --text-soft: rgba(74,52,40,0.70);
+  --card-bg: rgba(255, 255, 255, 0.88);
+  --card-border: rgba(160, 120, 95, 0.22);
+  --shadow: 0 18px 48px rgba(92, 58, 36, 0.22);
 
-      --accent: #c47a4e;
-      --eq-bottom: #c47a4e;
-      --eq-top: rgba(255,255,255,0.25);
+  --text: #3b2a22;
+  --text-soft: rgba(59, 42, 34, 0.68);
 
-      --btn-bg: rgba(255,255,255,0.65);
-      --btn-border: rgba(186, 152, 116, 0.9);
-      --btn-text: #2b1b12;
+  --accent: #c07a52;
+  --eq-bottom: #c07a52;
+  --eq-top: rgba(59, 42, 34, 0.12);
 
-      --wave-c1: rgba(196,122,78,0.22);
-    }
+  --btn-bg: linear-gradient(180deg, rgba(255,255,255,0.70), rgba(255,255,255,0.45));
+  --btn-border: rgba(168, 118, 86, 0.35);
+  --btn-text: #2e1f18;
+
+  --cover-shadow: 0 18px 40px rgba(74, 43, 24, 0.22);
+
+  --wave-c1: rgba(192, 122, 82, 0.22);
+  --wave-c2: rgba(255,255,255,0.00);
+}
+
 
     html[data-theme="vintage"]{
-      --bg:
-        radial-gradient(circle at 18% 12%, rgba(0, 255, 240, 0.24), transparent 52%),
-        radial-gradient(circle at 78% 18%, rgba(255, 0, 214, 0.22), transparent 54%),
-        radial-gradient(circle at 55% 88%, rgba(255, 179, 0, 0.10), transparent 62%),
-        linear-gradient(135deg, #050014 0%, #09001f 35%, #04000e 100%);
+  /* 90s neon jukebox: teal + magenta + purple + electric blue */
+  --bg:
+    radial-gradient(circle at 18% 12%, rgba(0, 255, 240, 0.28), transparent 54%),
+    radial-gradient(circle at 85% 22%, rgba(255, 0, 214, 0.26), transparent 56%),
+    radial-gradient(circle at 55% 88%, rgba(123, 65, 255, 0.22), transparent 58%),
+    radial-gradient(circle at 40% 55%, rgba(0, 140, 255, 0.18), transparent 60%),
+    linear-gradient(135deg, #070018 0%, #0b0030 40%, #050012 100%);
 
-      --card-bg: rgba(10, 6, 22, 0.70);
-      --card-border: rgba(255,255,255,0.14);
-      --shadow: 0 26px 90px rgba(0,0,0,0.75);
+  --card-bg: rgba(10, 6, 22, 0.72);
+  --card-border: rgba(255,255,255,0.18);
+  --shadow: 0 30px 110px rgba(0,0,0,0.80);
 
-      --text: rgba(255,255,255,0.94);
-      --text-soft: rgba(255,255,255,0.72);
+  --text: rgba(255,255,255,0.95);
+  --text-soft: rgba(255,255,255,0.74);
 
-      --accent: #00fff0;
-      --eq-bottom: #ff00d6;
-      --eq-top: rgba(255,255,255,0.08);
+  /* accents / UI pops */
+  --accent: #00fff0;     /* cyan */
+  --eq-bottom: #ff00d6;  /* magenta */
+  --eq-top: rgba(255,255,255,0.08);
 
-      --btn-bg: rgba(255,255,255,0.09);
-      --btn-border: rgba(255,255,255,0.18);
-      --btn-text: rgba(255,255,255,0.94);
+  /* buttons: glossy neon glass */
+  --btn-bg: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+  --btn-border: rgba(255,255,255,0.22);
+  --btn-text: rgba(255,255,255,0.96);
 
-      --cover-shadow: 0 20px 62px rgba(0,0,0,0.70);
-      --wave-c1: rgba(0,255,240,0.30);
-    }
+  --cover-shadow: 0 26px 85px rgba(0,0,0,0.78);
+
+  /* wave glow */
+  --wave-c1: rgba(0,255,240,0.34);
+  --wave-c2: rgba(255,0,214,0.00);
+}
 
     html[data-theme="taproom"]{
       --bg:
@@ -209,7 +226,7 @@
     }
 
     .album-art{
-      width: min(100%, 520px);
+      width: min(100%, 572px);
       aspect-ratio: 1 / 1;
       border-radius: 30px;
       position:relative;
@@ -820,3 +837,4 @@
   </script>
 </body>
 </html>
+
