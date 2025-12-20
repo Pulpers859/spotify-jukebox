@@ -488,7 +488,11 @@
     html.force-portrait .track{ font-size: clamp(2.0rem, 4.8vw, 2.9rem); }
     html.force-portrait .artist{ font-size: clamp(1.15rem, 3.4vw, 1.6rem); }
     html.force-portrait .controls{ flex-direction: column; align-items: stretch; gap: 1.2rem; }
-    html.force-portrait .btn-row{ justify-content: space-between; }
+    html.force-portrait .btn-row{
+  justify-content: center;   /* or flex-start if you prefer */
+  gap: 0.9rem;
+}
+
     html.force-portrait .eq-bars{ width:100%; height:36px; justify-content: space-between; }
     html.force-portrait .eq-bar{ max-width:10px; flex:0 0 10px; }
 
@@ -830,7 +834,29 @@ html[data-theme="taproom"] .border-wave::before{
     rgba(244,196,48,0.35),
     rgba(118,211,155,0.00));
 }
+/* FireTV overscan safe area — tuned from your photo */
+:root{
+  --safe-top: 18px;
+  --safe-right: 90px;   /* gives the right edge breathing room */
+  --safe-bottom: 60px;  /* protects bottom-right button */
+  --safe-left: 18px;
+}
 
+html.force-portrait .frame{
+  padding:
+    calc(4svh + var(--safe-top))
+    calc(6vw  + var(--safe-right))
+    calc(4svh + var(--safe-bottom))
+    calc(6vw  + var(--safe-left)) !important;
+}
+#themeLabel{
+  max-width: 44vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+    
     
   </style>
 </head>
@@ -1292,6 +1318,7 @@ html[data-theme="taproom"] .border-wave::before{
   </script>
 </body>
 </html>
+
 
 
 
