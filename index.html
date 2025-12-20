@@ -713,6 +713,124 @@ html[data-theme="cozy"] .cover-rotor{
   filter: blur(9px);
 }
 
+    /* =========================================================
+   Album border “wave” (Silk-safe), no vinyl
+   ========================================================= */
+
+.vinyl{ display:none !important; }
+.cover-rotor{ display:none !important; }
+
+/* must match your cover image sizing */
+:root{
+  --cover-size: 74%;      /* matches albumImg width/height */
+  --cover-radius: 18px;   /* matches albumImg border-radius */
+  --wave-speed: 4.2s;     /* slower = classier */
+}
+
+/* Ensure the album image sits above the vinyl area */
+.album-art img#albumImg{
+  position: relative;
+  z-index: 3;
+  border-radius: var(--cover-radius);
+}
+
+/* The border wave layer sits ON TOP of the cover, but is transparent */
+.border-wave{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--cover-size);
+  height: var(--cover-size);
+  transform: translate(-50%, -50%);
+  border-radius: var(--cover-radius);
+  pointer-events: none;
+  z-index: 4;
+
+  /* subtle always-on border */
+  box-shadow:
+    inset 0 0 0 2px rgba(255,255,255,0.10),
+    0 10px 26px rgba(0,0,0,0.22);
+}
+
+/* The moving “wave” streak (a soft glowing pill) */
+.border-wave::before{
+  content:"";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 120px;
+  height: 7px;
+  border-radius: 999px;
+  transform: translate(-50%, -50%);
+
+  /* glow streak (works in Silk) */
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.0),
+    rgba(255,255,255,0.55),
+    rgba(255,255,255,0.0)
+  );
+
+  filter: blur(0.2px);
+  opacity: 0.0; /* off when paused */
+}
+
+/* A softer trailing glow behind the streak */
+.border-wave::after{
+  content:"";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 220px;
+  height: 22px;
+  border-radius: 999px;
+  transform: translate(-50%, -55%);
+
+  background: radial-gradient(circle at center,
+    rgba(255,255,255,0.18),
+    rgba(255,255,255,0.00) 70%);
+
+  filter: blur(6px);
+  opacity: 0.0; /* off when paused */
+}
+
+/* Spin the wave around the border ONLY when playing (you already toggle .spinning) */
+@keyframes borderWaveOrbit{
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.album-art.spinning .border-wave{
+  animation: borderWaveOrbit var(--wave-speed) linear infinite;
+}
+.album-art.spinning .border-wave::before,
+.album-art.spinning .border-wave::after{
+  opacity: 1;
+}
+
+/* Theme-tinted wave (subtle) */
+html[data-theme="vintage"] .border-wave::before{
+  background: linear-gradient(90deg,
+    rgba(0,255,240,0.00),
+    rgba(0,255,240,0.55),
+    rgba(255,0,214,0.45),
+    rgba(0,255,240,0.00));
+}
+html[data-theme="vintage"] .border-wave::after{
+  background: radial-gradient(circle at center,
+    rgba(0,255,240,0.10),
+    rgba(255,0,214,0.06),
+    rgba(255,255,255,0.00) 72%);
+}
+
+html[data-theme="taproom"] .border-wave::before{
+  background: linear-gradient(90deg,
+    rgba(118,211,155,0.00),
+    rgba(118,211,155,0.45),
+    rgba(244,196,48,0.35),
+    rgba(118,211,155,0.00));
+}
+
     
   </style>
 </head>
@@ -1174,6 +1292,7 @@ html[data-theme="cozy"] .cover-rotor{
   </script>
 </body>
 </html>
+
 
 
 
