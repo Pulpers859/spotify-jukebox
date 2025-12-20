@@ -5,15 +5,12 @@
   <title>Funcleson Jukebox</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-<meta http-equiv="Pragma" content="no-cache" />
-<meta http-equiv="Expires" content="0" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
 
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
 
   <style>
-    /* =========================
-       THEME TOKENS (BASE)
-       ========================= */
     :root{
       --frame-radius: 28px;
 
@@ -35,80 +32,70 @@
 
       --cover-shadow: 0 12px 28px rgba(60, 36, 20, 0.30);
 
-      /* Overscan-safe INNER padding (symmetric so it stays centered) */
       --safe-x: 28px;
       --safe-y: 28px;
 
-      /* album wave */
       --wave-c1: rgba(196,122,78,0.22);
       --wave-c2: rgba(255,255,255,0.00);
     }
 
-    /* =========================
-       THEMES
-       ========================= */
+    /* THEMES */
     html[data-theme="cozy"]{
-  /* Cozy: warm latte -> blush -> dusk */
-  --bg:
-    radial-gradient(circle at 18% 12%, rgba(255, 244, 226, 0.95), transparent 55%),
-    radial-gradient(circle at 82% 22%, rgba(255, 214, 225, 0.55), transparent 58%),
-    radial-gradient(circle at 55% 88%, rgba(245, 208, 175, 0.45), transparent 62%),
-    linear-gradient(135deg, #f7efe6 0%, #f2ddd2 45%, #ead2c6 100%);
+      --bg:
+        radial-gradient(circle at 18% 12%, rgba(255, 244, 226, 0.95), transparent 55%),
+        radial-gradient(circle at 82% 22%, rgba(255, 214, 225, 0.55), transparent 58%),
+        radial-gradient(circle at 55% 88%, rgba(245, 208, 175, 0.45), transparent 62%),
+        linear-gradient(135deg, #f7efe6 0%, #f2ddd2 45%, #ead2c6 100%);
 
-  --card-bg: rgba(255, 255, 255, 0.88);
-  --card-border: rgba(160, 120, 95, 0.22);
-  --shadow: 0 18px 48px rgba(92, 58, 36, 0.22);
+      --card-bg: rgba(255, 255, 255, 0.88);
+      --card-border: rgba(160, 120, 95, 0.22);
+      --shadow: 0 18px 48px rgba(92, 58, 36, 0.22);
 
-  --text: #3b2a22;
-  --text-soft: rgba(59, 42, 34, 0.68);
+      --text: #3b2a22;
+      --text-soft: rgba(59, 42, 34, 0.68);
 
-  --accent: #c07a52;
-  --eq-bottom: #c07a52;
-  --eq-top: rgba(59, 42, 34, 0.12);
+      --accent: #c07a52;
+      --eq-bottom: #c07a52;
+      --eq-top: rgba(59, 42, 34, 0.12);
 
-  --btn-bg: linear-gradient(180deg, rgba(255,255,255,0.70), rgba(255,255,255,0.45));
-  --btn-border: rgba(168, 118, 86, 0.35);
-  --btn-text: #2e1f18;
+      --btn-bg: linear-gradient(180deg, rgba(255,255,255,0.70), rgba(255,255,255,0.45));
+      --btn-border: rgba(168, 118, 86, 0.35);
+      --btn-text: #2e1f18;
 
-  --cover-shadow: 0 18px 40px rgba(74, 43, 24, 0.22);
+      --cover-shadow: 0 18px 40px rgba(74, 43, 24, 0.22);
 
-  --wave-c1: rgba(192, 122, 82, 0.22);
-  --wave-c2: rgba(255,255,255,0.00);
-}
-
+      --wave-c1: rgba(192, 122, 82, 0.22);
+      --wave-c2: rgba(255,255,255,0.00);
+    }
 
     html[data-theme="vintage"]{
-  /* 90s neon jukebox: teal + magenta + purple + electric blue */
-  --bg:
-    radial-gradient(circle at 18% 12%, rgba(0, 255, 240, 0.28), transparent 54%),
-    radial-gradient(circle at 85% 22%, rgba(255, 0, 214, 0.26), transparent 56%),
-    radial-gradient(circle at 55% 88%, rgba(123, 65, 255, 0.22), transparent 58%),
-    radial-gradient(circle at 40% 55%, rgba(0, 140, 255, 0.18), transparent 60%),
-    linear-gradient(135deg, #070018 0%, #0b0030 40%, #050012 100%);
+      --bg:
+        radial-gradient(circle at 18% 12%, rgba(0, 255, 240, 0.28), transparent 54%),
+        radial-gradient(circle at 85% 22%, rgba(255, 0, 214, 0.26), transparent 56%),
+        radial-gradient(circle at 55% 88%, rgba(123, 65, 255, 0.22), transparent 58%),
+        radial-gradient(circle at 40% 55%, rgba(0, 140, 255, 0.18), transparent 60%),
+        linear-gradient(135deg, #070018 0%, #0b0030 40%, #050012 100%);
 
-  --card-bg: rgba(10, 6, 22, 0.72);
-  --card-border: rgba(255,255,255,0.18);
-  --shadow: 0 30px 110px rgba(0,0,0,0.80);
+      --card-bg: rgba(10, 6, 22, 0.72);
+      --card-border: rgba(255,255,255,0.18);
+      --shadow: 0 30px 110px rgba(0,0,0,0.80);
 
-  --text: rgba(255,255,255,0.95);
-  --text-soft: rgba(255,255,255,0.74);
+      --text: rgba(255,255,255,0.95);
+      --text-soft: rgba(255,255,255,0.74);
 
-  /* accents / UI pops */
-  --accent: #00fff0;     /* cyan */
-  --eq-bottom: #ff00d6;  /* magenta */
-  --eq-top: rgba(255,255,255,0.08);
+      --accent: #00fff0;
+      --eq-bottom: #ff00d6;
+      --eq-top: rgba(255,255,255,0.08);
 
-  /* buttons: glossy neon glass */
-  --btn-bg: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
-  --btn-border: rgba(255,255,255,0.22);
-  --btn-text: rgba(255,255,255,0.96);
+      --btn-bg: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+      --btn-border: rgba(255,255,255,0.22);
+      --btn-text: rgba(255,255,255,0.96);
 
-  --cover-shadow: 0 26px 85px rgba(0,0,0,0.78);
+      --cover-shadow: 0 26px 85px rgba(0,0,0,0.78);
 
-  /* wave glow */
-  --wave-c1: rgba(0,255,240,0.34);
-  --wave-c2: rgba(255,0,214,0.00);
-}
+      --wave-c1: rgba(0,255,240,0.34);
+      --wave-c2: rgba(255,0,214,0.00);
+    }
 
     html[data-theme="taproom"]{
       --bg:
@@ -135,9 +122,7 @@
       --wave-c1: rgba(244,196,48,0.22);
     }
 
-    /* =========================
-       BASE
-       ========================= */
+    /* BASE */
     *{ box-sizing:border-box; margin:0; padding:0; }
     html, body{
       width:100%;
@@ -148,11 +133,7 @@
       color: var(--text);
     }
 
-    /* =========================
-       SILK PORTRAIT ENGINE (STABLE)
-       - No scaling
-       - No drifting nudges
-       ========================= */
+    /* SILK PORTRAIT ENGINE */
     #viewport{ position: fixed; inset: 0; overflow: hidden; }
     #app{
       position:absolute;
@@ -169,16 +150,14 @@
       transform: translate(-50%, -50%) rotate(-90deg);
     }
 
-    /* =========================
-       FRAME LAYOUT
-       ========================= */
+    /* FRAME */
     .frame{
       width: 100%;
       height: 100%;
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       box-shadow: var(--shadow);
-      border-radius: 0;           /* fill screen */
+      border-radius: 0;
       padding: calc(4vh + var(--safe-y)) calc(6vw + var(--safe-x));
       display:grid;
       grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
@@ -189,7 +168,6 @@
       backdrop-filter: blur(12px);
     }
 
-    /* Portrait: single column layout */
     .header{
       grid-column: 1 / -1;
       display:flex;
@@ -207,12 +185,11 @@
       letter-spacing:0.22em;
       opacity:0.9;
       white-space:nowrap;
-      max-width: 70vw; /* avoid right clipping */
+      max-width: 70vw;
       overflow:hidden;
       text-overflow:ellipsis;
     }
 
-    /* Always stack header on portrait to prevent “Theme:” clipping */
     html.force-portrait .header,
     @media (orientation: portrait){
       .header{
@@ -241,7 +218,7 @@
       background: rgba(255,255,255,0.06);
     }
 
-    /* ===== Rotating shadow wave around cover (Silk-safe) ===== */
+    /* Rotating shadow wave */
     .album-wave{
       position:absolute;
       top:50%;
@@ -360,31 +337,31 @@
       display:flex;
       align-items:center;
       justify-content:center;
-      gap:0.9rem;
+      gap:0.75rem;
       flex-wrap:wrap;
       width:100%;
     }
 
+    /* SMALLER BUTTONS (requested) */
     .pill-btn{
-      padding: 0.72rem 1.15rem;
+      padding: 0.52rem 0.86rem;
       border-radius: 999px;
       border: 1px solid var(--btn-border);
       background: var(--btn-bg);
       color: var(--btn-text);
       cursor: pointer;
       text-transform: uppercase;
-      letter-spacing: 0.16em;
-      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      font-size: 0.66rem;
       font-weight: 800;
       display:inline-flex;
       align-items:center;
-      gap:0.55rem;
+      gap:0.42rem;
       user-select:none;
     }
-
     .pill-btn span.icon{
-      width:0.75rem;
-      height:0.75rem;
+      width:0.60rem;
+      height:0.60rem;
       border-radius:50%;
       border: 2px solid rgba(255,255,255,0.45);
     }
@@ -406,94 +383,11 @@
       opacity: 0.9;
     }
 
-    /* Force single-column in portrait */
     html.force-portrait .frame{
       grid-template-columns: 1fr;
       grid-template-rows: auto auto 1fr auto;
       gap: 2.2vh 0;
     }
-
-   /* ============================
-   HARD THEME OVERRIDES (WINS)
-   Paste at VERY BOTTOM of <style>
-   ============================ */
-
-/* COZY: warm gradient, cozy paper */
-html[data-theme="cozy"] body{
-  background:
-    radial-gradient(circle at 18% 12%, rgba(255, 244, 227, 1) 0%, transparent 55%),
-    radial-gradient(circle at 82% 22%, rgba(255, 214, 225, 0.70) 0%, transparent 60%),
-    radial-gradient(circle at 50% 92%, rgba(240, 208, 180, 0.70) 0%, transparent 62%),
-    linear-gradient(135deg, #f7efe6 0%, #f0d9cf 48%, #e8cfc2 100%) !important;
-}
-html[data-theme="cozy"] .frame{
-  background: rgba(255,255,255,0.90) !important;
-  border-color: rgba(160, 120, 95, 0.22) !important;
-  box-shadow: 0 18px 48px rgba(92, 58, 36, 0.22) !important;
-}
-html[data-theme="cozy"] .pill-btn{
-  background: linear-gradient(180deg, rgba(255,255,255,0.74), rgba(255,255,255,0.46)) !important;
-  border-color: rgba(168, 118, 86, 0.35) !important;
-  color: #2e1f18 !important;
-}
-html[data-theme="cozy"] .eq-bar{
-  background: linear-gradient(to top, rgba(59,42,34,0.12), #c07a52) !important;
-}
-html[data-theme="cozy"] .album-wave::before{
-  background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(192,122,82,0.28) 48%, rgba(0,0,0,0) 78%) !important;
-}
-
-/* VINTAGE: 90s jukebox neon (teal/magenta/purple/blue) */
-html[data-theme="vintage"] body{
-  background:
-    radial-gradient(circle at 18% 12%, rgba(0, 255, 240, 0.30) 0%, transparent 55%),
-    radial-gradient(circle at 85% 20%, rgba(255, 0, 214, 0.28) 0%, transparent 58%),
-    radial-gradient(circle at 55% 88%, rgba(123, 65, 255, 0.25) 0%, transparent 60%),
-    radial-gradient(circle at 40% 55%, rgba(0, 140, 255, 0.20) 0%, transparent 62%),
-    linear-gradient(135deg, #070018 0%, #0b0030 42%, #050012 100%) !important;
-}
-html[data-theme="vintage"] .frame{
-  background: rgba(12, 8, 28, 0.72) !important;
-  border-color: rgba(255,255,255,0.18) !important;
-  box-shadow: 0 30px 110px rgba(0,0,0,0.80) !important;
-}
-html[data-theme="vintage"] .pill-btn{
-  background: linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.06)) !important;
-  border-color: rgba(255,255,255,0.22) !important;
-  color: rgba(255,255,255,0.96) !important;
-}
-html[data-theme="vintage"] .eq-bar{
-  background: linear-gradient(to top, rgba(255,255,255,0.08), #ff00d6) !important;
-}
-html[data-theme="vintage"] .album-wave::before{
-  background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,255,240,0.34) 42%, rgba(0,0,0,0) 70%) !important;
-}
-
-/* TAPROOM: forest patio / cabin */
-html[data-theme="taproom"] body{
-  background:
-    radial-gradient(circle at 20% 15%, rgba(120, 210, 155, 0.18) 0%, transparent 58%),
-    radial-gradient(circle at 85% 22%, rgba(255, 196, 48, 0.16) 0%, transparent 60%),
-    radial-gradient(circle at 50% 92%, rgba(40, 90, 60, 0.22) 0%, transparent 62%),
-    linear-gradient(135deg, #06110c 0%, #0b1b14 45%, #08100f 100%) !important;
-}
-html[data-theme="taproom"] .frame{
-  background: rgba(16, 22, 18, 0.72) !important;
-  border-color: rgba(244, 196, 48, 0.16) !important;
-  box-shadow: 0 26px 90px rgba(0,0,0,0.70) !important;
-}
-html[data-theme="taproom"] .pill-btn{
-  background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.06)) !important;
-  border-color: rgba(255,255,255,0.14) !important;
-  color: rgba(255,255,255,0.94) !important;
-}
-html[data-theme="taproom"] .eq-bar{
-  background: linear-gradient(to top, rgba(255,255,255,0.08), #f4c430) !important;
-}
-html[data-theme="taproom"] .album-wave::before{
-  background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(244,196,48,0.22) 50%, rgba(0,0,0,0) 78%) !important;
-}
-
   </style>
 </head>
 
@@ -512,7 +406,7 @@ html[data-theme="taproom"] .album-wave::before{
             <img id="albumImg" alt="" />
             <div class="album-placeholder" id="albumPlaceholder">
               <div>Nothing playing…</div>
-              <span>Start Spotify on any device</span>
+              <span id="placeholderHint">Start Spotify on any device</span>
             </div>
           </div>
         </div>
@@ -551,20 +445,21 @@ html[data-theme="taproom"] .album-wave::before{
     const REDIRECT_URI = window.location.origin + window.location.pathname;
     const SCOPES = ["user-read-playback-state", "user-read-currently-playing"];
 
-   // ===== SCROBBLE MODE (Last.fm) =====
-const LASTFM_USER = "funcleson";          // your Last.fm username
-const LASTFM_API_KEY = "529379aa6bef76cade9e86686d64e75f";  // <-- paste your Last.fm API key here
+    // ===== APPLE MODE (Last.fm scrobbling) =====
+    const LASTFM_USER = "funcleson";
+    const LASTFM_API_KEY = "529379aa6bef76cade9e86686d64e75f";
 
-    
     // ==== UI ====
     const loginButton = document.getElementById("loginButton");
     const logoutButton = document.getElementById("logoutButton");
     const themeButton  = document.getElementById("themeButton");
+    const modeButton   = document.getElementById("modeButton");
     const themeLabelEl = document.getElementById("themeLabel");
-const modeButton   = document.getElementById("modeButton");
+
     const trackNameEl = document.getElementById("trackName");
     const artistNameEl = document.getElementById("artistName");
     const statusTextEl = document.getElementById("statusText");
+    const placeholderHintEl = document.getElementById("placeholderHint");
 
     const albumArtEl = document.getElementById("albumArt");
     const albumPlaceholderEl = document.getElementById("albumPlaceholder");
@@ -602,30 +497,28 @@ const modeButton   = document.getElementById("modeButton");
     }
 
     function toggleTheme(){
-      // ===== MODE SWITCHER =====
-const MODES = ["Spotify", "Apple"];
-
-function getMode(){
-  return localStorage.getItem("jukebox_mode") || "spotify";
-}
-
-function setMode(mode){
-  const m = MODES.includes(mode) ? mode : "spotify";
-  localStorage.setItem("jukebox_mode", m);
-  modeButton.textContent = `Mode: ${m === "spotify" ? "Spotify" : "Apple"}`;
-  applyModeUI();
-  restartPollingForMode();
-}
-
-function toggleMode(){
-  const current = getMode();
-  setMode(current === "spotify" ? "scrobble" : "spotify");
-}
-
       const order = ["cozy","vintage","taproom"];
       const current = document.documentElement.dataset.theme || "cozy";
       const idx = order.indexOf(current);
       setTheme(order[(idx + 1) % order.length]);
+    }
+
+    // ==== Mode switcher (Spotify vs Apple) ====
+    function getMode(){
+      return localStorage.getItem("jukebox_mode") || "spotify"; // "spotify" | "apple"
+    }
+
+    function setMode(mode){
+      const m = (mode === "apple") ? "apple" : "spotify";
+      localStorage.setItem("jukebox_mode", m);
+      modeButton.textContent = `Mode: ${m === "spotify" ? "Spotify" : "Apple"}`;
+      applyModeUI();
+      restartPollingForMode();
+    }
+
+    function toggleMode(){
+      const current = getMode();
+      setMode(current === "spotify" ? "apple" : "spotify");
     }
 
     // ==== PKCE helpers ====
@@ -670,7 +563,47 @@ function toggleMode(){
       animateEqBars(false);
     }
 
-    // ==== Auth ====
+    // ==== Unified renderer ====
+    function renderNowPlaying({ trackName, artistName, artworkUrl, isPlaying, status, hint }){
+      trackNameEl.textContent = trackName || "—";
+      artistNameEl.textContent = artistName || "—";
+
+      if (artworkUrl){
+        albumImgEl.src = artworkUrl;
+        albumImgEl.alt = `${trackName || ""} - ${artistName || ""}`.trim();
+        albumImgEl.style.display = "block";
+        albumPlaceholderEl.style.display = "none";
+      } else {
+        albumImgEl.removeAttribute("src");
+        albumImgEl.style.display = "none";
+        albumPlaceholderEl.style.display = "flex";
+      }
+
+      if (hint) placeholderHintEl.textContent = hint;
+
+      statusTextEl.textContent = status || (isPlaying ? "Playing" : "Paused");
+
+      if (isPlaying){
+        albumArtEl.classList.add("playing");
+        startEq();
+      } else {
+        albumArtEl.classList.remove("playing");
+        stopEq();
+      }
+    }
+
+    function showNothingPlaying(message, hint){
+      renderNowPlaying({
+        trackName: "—",
+        artistName: "—",
+        artworkUrl: "",
+        isPlaying: false,
+        status: message || "No active playback.",
+        hint: hint || placeholderHintEl.textContent
+      });
+    }
+
+    // ==== Auth (Spotify) ====
     async function loginWithSpotify() {
       const codeVerifier = generateRandomString(64);
       const codeChallenge = await createCodeChallenge(codeVerifier);
@@ -698,7 +631,7 @@ function toggleMode(){
       const codeVerifier = localStorage.getItem("spotify_code_verifier");
 
       if (!codeVerifier || !savedState || savedState !== stateFromUrl){
-        setLoggedOutUI("Auth error. Try logging in again.");
+        showNothingPlaying("Auth error. Try logging in again.", "Login to Spotify");
         return false;
       }
 
@@ -719,7 +652,7 @@ function toggleMode(){
       const data = await res.json();
       if (!res.ok){
         console.error("Token exchange error:", data);
-        setLoggedOutUI("Auth error. Try logging in again.");
+        showNothingPlaying("Auth error. Try logging in again.", "Login to Spotify");
         return false;
       }
 
@@ -790,7 +723,7 @@ function toggleMode(){
         });
 
         if (res.status === 204){
-          showNothingPlaying("No active playback. Start Spotify on any device.");
+          showNothingPlaying("No active playback. Start Spotify on any device.", "Start Spotify on any device");
           return;
         }
 
@@ -800,7 +733,7 @@ function toggleMode(){
 
           clearTokens();
           stopPolling();
-          setLoggedOutUI("Session expired. Tap Login again.");
+          showNothingPlaying("Session expired. Tap Login again.", "Login to Spotify");
           return;
         }
 
@@ -811,128 +744,81 @@ function toggleMode(){
 
         const data = await res.json();
         if (!data || !data.item){
-          showNothingPlaying("No active playback. Start Spotify on any device.");
+          showNothingPlaying("No active playback. Start Spotify on any device.", "Start Spotify on any device");
           return;
         }
-// ===== SCROBBLE (Last.fm) HELPERS =====
-function encodeTerm(s){
-  return encodeURIComponent((s || "").trim());
-}
 
-async function fetchItunesArtwork(trackName, artistName){
-  try{
-    const term = `${trackName} ${artistName}`.trim();
-    const url = `https://itunes.apple.com/search?term=${encodeTerm(term)}&limit=1&media=music`;
-    const res = await fetch(url);
-    const data = await res.json();
-    const art = data?.results?.[0]?.artworkUrl100;
-    if (!art) return "";
-    return art.replace(/100x100/g, "600x600");
-  } catch {
-    return "";
-  }
-}
+        const track = data.item;
+        const isPlaying = !!data.is_playing;
+        const trackName = track?.name || "—";
+        const artists = (track?.artists || []).map(a => a.name).join(", ") || "—";
+        const bestImage = track?.album?.images?.[0]?.url || "";
 
-async function fetchLastFmNowPlaying(){
-  const url =
-    `https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks` +
-    `&user=${encodeTerm(LASTFM_USER)}` +
-    `&api_key=${encodeTerm(LASTFM_API_KEY)}` +
-    `&limit=1&format=json`;
+        renderNowPlaying({
+          trackName,
+          artistName: artists,
+          artworkUrl: bestImage,
+          isPlaying,
+          status: isPlaying ? "Playing now on Spotify" : "Paused",
+          hint: "Start Spotify on any device"
+        });
 
-  const res = await fetch(url);
-  const data = await res.json();
-
-  const track = data?.recenttracks?.track?.[0];
-  if (!track) return null;
-
-  const trackName = track?.name || "—";
-  const artistName = track?.artist?.["#text"] || "—";
-  const nowPlaying = track?.["@attr"]?.nowplaying === "true";
-
-  const lastfmImg =
-    track?.image?.slice?.(-1)?.[0]?.["#text"] ||
-    track?.image?.find?.(i => i.size === "extralarge")?.["#text"] ||
-    "";
-
-  const artworkUrl = lastfmImg || await fetchItunesArtwork(trackName, artistName);
-
-  return {
-    trackName,
-    artistName,
-    artworkUrl: artworkUrl || "",
-    isPlaying: nowPlaying,
-    status: nowPlaying ? "Apple Music" : "Last scrobble (may lag ~30–90s)"
-  };
-}
-function renderNowPlaying({ trackName, artistName, artworkUrl, isPlaying, status }){
-  trackNameEl.textContent = trackName || "—";
-  artistNameEl.textContent = artistName || "—";
-
-  if (artworkUrl){
-    albumImgEl.src = artworkUrl;
-    albumImgEl.alt = `${trackName} - ${artistName}`;
-    albumImgEl.style.display = "block";
-    albumPlaceholderEl.style.display = "none";
-  } else {
-    albumImgEl.removeAttribute("src");
-    albumImgEl.style.display = "none";
-    albumPlaceholderEl.style.display = "flex";
-  }
-
-  statusTextEl.textContent = status || (isPlaying ? "Playing" : "Paused");
-
-  if (isPlaying){
-    albumArtEl.classList.add("playing");
-    startEq();
-  } else {
-    albumArtEl.classList.remove("playing");
-    stopEq();
-  }
-}
-
-        updateTrackUI(data);
       } catch (e){
         console.error("Now playing fetch error:", e);
       }
     }
 
-    function updateTrackUI(data){
-     const track = data.item;
-const isPlaying = !!data.is_playing;
+    // ==== Apple mode (Last.fm scrobbling) ====
+    function encodeTerm(s){ return encodeURIComponent((s || "").trim()); }
 
-const trackName = track?.name || "—";
-const artists = (track?.artists || []).map(a => a.name).join(", ") || "—";
-const bestImage = track?.album?.images?.[0]?.url || "";
-
-renderNowPlaying({
-  trackName,
-  artistName: artists,
-  artworkUrl: bestImage,
-  isPlaying,
-  status: isPlaying ? "Playing now on Spotify" : "Paused"
-});
-
-      if (isPlaying){
-        albumArtEl.classList.add("playing");
-        startEq();
-      } else {
-        albumArtEl.classList.remove("playing");
-        stopEq();
+    async function fetchItunesArtwork(trackName, artistName){
+      try{
+        const term = `${trackName} ${artistName}`.trim();
+        const url = `https://itunes.apple.com/search?term=${encodeTerm(term)}&limit=1&media=music`;
+        const res = await fetch(url);
+        const data = await res.json();
+        const art = data?.results?.[0]?.artworkUrl100;
+        if (!art) return "";
+        return art.replace(/100x100/g, "600x600");
+      } catch {
+        return "";
       }
     }
 
-    function showNothingPlaying(message){
-      trackNameEl.textContent = "—";
-      artistNameEl.textContent = "—";
-      albumPlaceholderEl.style.display = "flex";
-      albumImgEl.removeAttribute("src");
-      albumImgEl.style.display = "none";
-      statusTextEl.textContent = message || "No active playback.";
-      albumArtEl.classList.remove("playing");
-      stopEq();
+    async function fetchLastFmNowPlaying(){
+      const url =
+        `https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks` +
+        `&user=${encodeTerm(LASTFM_USER)}` +
+        `&api_key=${encodeTerm(LASTFM_API_KEY)}` +
+        `&limit=1&format=json`;
+
+      const res = await fetch(url);
+      const data = await res.json();
+      const track = data?.recenttracks?.track?.[0];
+      if (!track) return null;
+
+      const trackName = track?.name || "—";
+      const artistName = track?.artist?.["#text"] || "—";
+      const nowPlaying = track?.["@attr"]?.nowplaying === "true";
+
+      const lastfmImg =
+        track?.image?.slice?.(-1)?.[0]?.["#text"] ||
+        track?.image?.find?.(i => i.size === "extralarge")?.["#text"] ||
+        "";
+
+      const artworkUrl = lastfmImg || await fetchItunesArtwork(trackName, artistName);
+
+      return {
+        trackName,
+        artistName,
+        artworkUrl: artworkUrl || "",
+        isPlaying: nowPlaying,
+        status: nowPlaying ? "Apple Music" : "Last scrobble (may lag ~30–90s)",
+        hint: "Play Apple Music (scrobbling to Last.fm)"
+      };
     }
 
+    // ==== EQ ====
     function animateEqBars(isPlaying){
       eqBars.forEach(bar => {
         if (!isPlaying){
@@ -944,10 +830,32 @@ renderNowPlaying({
       });
     }
 
-    function startPolling(){
+    // ==== polling control ====
+    function startPollingSpotify(){
       if (pollInterval) return;
       pollInterval = setInterval(fetchCurrentlyPlaying, 5000);
       fetchCurrentlyPlaying();
+    }
+
+    function startPollingApple(){
+      if (pollInterval) return;
+      pollInterval = setInterval(async () => {
+        const info = await fetchLastFmNowPlaying();
+        if (!info){
+          showNothingPlaying("No recent scrobbles yet.", "Play Apple Music (scrobbling to Last.fm)");
+          return;
+        }
+        renderNowPlaying(info);
+      }, 7000);
+
+      (async () => {
+        const info = await fetchLastFmNowPlaying();
+        if (!info){
+          showNothingPlaying("No recent scrobbles yet.", "Play Apple Music (scrobbling to Last.fm)");
+          return;
+        }
+        renderNowPlaying(info);
+      })();
     }
 
     function stopPolling(){
@@ -956,55 +864,51 @@ renderNowPlaying({
         pollInterval = null;
       }
     }
-function applyModeUI(){
-  const mode = getMode();
-  const isSpotify = mode === "spotify";
 
-  // Only show Spotify auth buttons in Spotify mode
-  loginButton.style.display = isSpotify ? "inline-flex" : "none";
-  logoutButton.style.display = isSpotify ? "inline-flex" : "none";
-}
+    function applyModeUI(){
+      const mode = getMode();
+      const isSpotify = mode === "spotify";
 
-function restartPollingForMode(){
-  stopPolling();
-  stopEq();
+      // Only show Spotify auth buttons in Spotify mode
+      loginButton.style.display = isSpotify ? "inline-flex" : "none";
+      logoutButton.style.display = isSpotify ? "inline-flex" : "none";
 
-  const mode = getMode();
-
-  if (mode === "spotify"){
-    // Resume your Spotify polling (it will just show login if no token)
-    startPolling();
-    return;
-  }
-
-  // Scrobble mode
-  pollInterval = setInterval(async () => {
-    const info = await fetchLastFmNowPlaying();
-    if (!info){
-      showNothingPlaying("No recent scrobbles yet. Start Apple Music + scrobbler.");
-      return;
-    }
-    renderNowPlaying(info);
-  }, 7000);
-
-  (async () => {
-    const info = await fetchLastFmNowPlaying();
-    if (!info){
-      showNothingPlaying("No recent scrobbles yet. Start Apple Music + scrobbler.");
-      return;
-    }
-    renderNowPlaying(info);
-  })();
-}
-
-    function setLoggedOutUI(message){
-      loginButton.style.display = "inline-flex";
-      showNothingPlaying(message || "Connect to Spotify and start playing music.");
+      if (!isSpotify){
+        showNothingPlaying("Apple mode ready.", "Play Apple Music (scrobbling to Last.fm)");
+      }
     }
 
-    function setLoggedInUI(){
-      loginButton.style.display = "none";
-      statusTextEl.textContent = "Connected. Start playing any track on Spotify.";
+    async function ensureSpotifyReady(){
+      // Try to use stored token; refresh if needed
+      const storedToken = localStorage.getItem("spotify_access_token");
+      if (!storedToken || tokenExpired()){
+        const ok = await refreshAccessToken();
+        if (!ok){
+          accessToken = null;
+          return false;
+        }
+      }
+      accessToken = localStorage.getItem("spotify_access_token");
+      return !!accessToken;
+    }
+
+    async function restartPollingForMode(){
+      stopPolling();
+      stopEq();
+
+      const mode = getMode();
+      if (mode === "apple"){
+        startPollingApple();
+        return;
+      }
+
+      // Spotify mode
+      const ready = await ensureSpotifyReady();
+      if (!ready){
+        showNothingPlaying("Tap Login to connect Spotify.", "Login to Spotify");
+        return;
+      }
+      startPollingSpotify();
     }
 
     // ==== init ====
@@ -1012,14 +916,18 @@ function restartPollingForMode(){
       applyForcePortrait();
       initTheme();
 
+      // wire buttons
+      themeButton.addEventListener("click", toggleTheme);
+      modeButton.addEventListener("click", toggleMode);
       loginButton.addEventListener("click", loginWithSpotify);
-      themeButton.addEventListener("click", toggleTheme); modeButton.addEventListener("click", toggleMode);
       logoutButton.addEventListener("click", () => {
         clearTokens();
         stopPolling();
-        setLoggedOutUI("Logged out. Tap Login to reconnect.");
+        stopEq();
+        showNothingPlaying("Logged out. Tap Login to reconnect.", "Login to Spotify");
       });
 
+      // handle Spotify redirect
       const urlParams = new URLSearchParams(window.location.search);
       const code = urlParams.get("code");
       const state = urlParams.get("state");
@@ -1027,36 +935,14 @@ function restartPollingForMode(){
 
       if (error){
         console.error("Spotify auth error:", error);
-        setLoggedOutUI("Auth error. Try logging in again.");
-        return;
+        showNothingPlaying("Spotify auth error. Try Login again.", "Login to Spotify");
+      } else if (code){
+        await exchangeCodeForToken(code, state);
       }
 
-      if (code){
-        const ok = await exchangeCodeForToken(code, state);
-        if (!ok) return;
-      }
-
-      const storedToken = localStorage.getItem("spotify_access_token");
-      if (!storedToken || tokenExpired()){
-        const ok = await refreshAccessToken();
-        if (!ok){
-          setLoggedOutUI();
-          return;
-        }
-      }
-
-      accessToken = localStorage.getItem("spotify_access_token");
-      if (!accessToken){
-        setLoggedOutUI();
-        return;
-      }
-
+      // start in stored mode
       setMode(getMode());
     })();
   </script>
 </body>
 </html>
-
-
-
-
