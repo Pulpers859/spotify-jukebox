@@ -388,29 +388,37 @@
       grid-template-rows: auto auto 1fr auto;
       gap: 2.2vh 0;
     }
-/* =========================
-   VINTAGE: thin neon pink border
+
+    /* =========================
+   VINTAGE: thin neon pink tube border (outer + inner glow)
    ========================= */
 html[data-theme="vintage"] .frame{
-  border: 2px solid rgba(255, 0, 214, 0.78) !important; /* neon pink */
+  border: 2px solid rgba(255, 0, 214, 0.82) !important; /* neon pink */
   box-shadow:
-    0 0 10px rgba(255, 0, 214, 0.35),
+    0 0 10px rgba(255, 0, 214, 0.38),
     0 0 28px rgba(255, 0, 214, 0.22),
+    0 0 60px rgba(255, 0, 214, 0.12),
     var(--shadow) !important;
 }
 
-/* Optional: tiny inner glow line for extra “tube neon” feel */
+/* inner glow line */
 html[data-theme="vintage"] .frame::after{
-  /* if you already use .frame::after in another theme, delete this block */
   content:"";
   position:absolute;
-  inset: 10px;
-  border-radius: 0;            /* frame is full-screen; keep straight */
+  inset: 12px;                 /* distance from edge */
   pointer-events:none;
   border: 1px solid rgba(255, 0, 214, 0.22);
-  box-shadow: 0 0 18px rgba(255, 0, 214, 0.18);
-  opacity: 0.9;
+  box-shadow:
+    0 0 14px rgba(255, 0, 214, 0.18),
+    inset 0 0 18px rgba(255, 0, 214, 0.08);
+  opacity: 0.95;
   z-index: 0;
+}
+
+/* keep your real content above the glow layer */
+html[data-theme="vintage"] .frame > *{
+  position: relative;
+  z-index: 1;
 }
 
 
@@ -972,6 +980,7 @@ html[data-theme="vintage"] .frame::after{
   </script>
 </body>
 </html>
+
 
 
 
