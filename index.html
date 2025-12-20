@@ -212,10 +212,17 @@
 
     /* Rotate + scale when Silk gives us landscape viewport */
     html.force-portrait #app{
-      width: 100svh;
-      height: 100svw;
-      transform: translate(-50%, -50%) rotate(-90deg) scale(var(--portrait-scale));
-    }
+  width: 100svh;
+  height: 100svw;
+
+  /* Overscan compensation: push content LEFT and UP so right/bottom aren’t cropped */
+  transform:
+    translate(calc(-50% - var(--overscan-x, 28px)),
+              calc(-50% - var(--overscan-y, 18px)))
+    rotate(-90deg)
+    scale(var(--portrait-scale));
+}
+
 
     /* =========================================================
        MAIN FRAME LAYOUT
@@ -569,10 +576,11 @@
    (prevents right edge from being cut off)
    ========================================================= */
 :root{
-  --safe-top: 16px;
-  --safe-right: 44px;  /* usually the problem edge */
-  --safe-bottom: 16px;
-  --safe-left: 16px;
+  --safe-top: 18px;
+  --safe-right: 70px;   /* bigger right safe zone */
+  --safe-bottom: 46px;  /* bigger bottom safe zone for logout */
+  --safe-left: 18px;
+}
 }
 
 /* Apply safe padding only when we are doing the Silk rotation */
@@ -1089,6 +1097,7 @@ html.force-portrait .header{
   </script>
 </body>
 </html>
+
 
 
 
