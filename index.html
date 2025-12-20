@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <title>Funcleson Jukebox</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
 
   <style>
@@ -409,93 +413,85 @@
       gap: 2.2vh 0;
     }
 
-    /* ==========================================================
-   THEME OVERRIDES (PASTE AT VERY BOTTOM OF <style>)
-   Forces themes to look different even if earlier CSS exists
-   ========================================================== */
+   /* ============================
+   HARD THEME OVERRIDES (WINS)
+   Paste at VERY BOTTOM of <style>
+   ============================ */
 
-html, body { background: var(--bg) !important; }
-
-/* COZY: warm cozy gradient, not flat cream */
-html[data-theme="cozy"]{
-  --bg:
-    radial-gradient(circle at 15% 10%, rgba(255, 244, 227, 1) 0%, transparent 55%),
-    radial-gradient(circle at 85% 18%, rgba(255, 214, 225, 0.70) 0%, transparent 60%),
-    radial-gradient(circle at 50% 90%, rgba(240, 208, 180, 0.70) 0%, transparent 60%),
+/* COZY: warm gradient, cozy paper */
+html[data-theme="cozy"] body{
+  background:
+    radial-gradient(circle at 18% 12%, rgba(255, 244, 227, 1) 0%, transparent 55%),
+    radial-gradient(circle at 82% 22%, rgba(255, 214, 225, 0.70) 0%, transparent 60%),
+    radial-gradient(circle at 50% 92%, rgba(240, 208, 180, 0.70) 0%, transparent 62%),
     linear-gradient(135deg, #f7efe6 0%, #f0d9cf 48%, #e8cfc2 100%) !important;
-
-  --card-bg: rgba(255, 255, 255, 0.90) !important;
-  --card-border: rgba(160, 120, 95, 0.22) !important;
-  --shadow: 0 18px 48px rgba(92, 58, 36, 0.22) !important;
-
-  --text: #3b2a22 !important;
-  --text-soft: rgba(59, 42, 34, 0.68) !important;
-
-  --accent: #c07a52 !important;
-  --eq-bottom: #c07a52 !important;
-  --eq-top: rgba(59, 42, 34, 0.12) !important;
-
-  --btn-bg: linear-gradient(180deg, rgba(255,255,255,0.72), rgba(255,255,255,0.46)) !important;
-  --btn-border: rgba(168, 118, 86, 0.35) !important;
-  --btn-text: #2e1f18 !important;
-
-  --wave-c1: rgba(192, 122, 82, 0.24) !important;
-  --wave-c2: rgba(255,255,255,0.00) !important;
+}
+html[data-theme="cozy"] .frame{
+  background: rgba(255,255,255,0.90) !important;
+  border-color: rgba(160, 120, 95, 0.22) !important;
+  box-shadow: 0 18px 48px rgba(92, 58, 36, 0.22) !important;
+}
+html[data-theme="cozy"] .pill-btn{
+  background: linear-gradient(180deg, rgba(255,255,255,0.74), rgba(255,255,255,0.46)) !important;
+  border-color: rgba(168, 118, 86, 0.35) !important;
+  color: #2e1f18 !important;
+}
+html[data-theme="cozy"] .eq-bar{
+  background: linear-gradient(to top, rgba(59,42,34,0.12), #c07a52) !important;
+}
+html[data-theme="cozy"] .album-wave::before{
+  background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(192,122,82,0.28) 48%, rgba(0,0,0,0) 78%) !important;
 }
 
-/* VINTAGE: loud 90s jukebox (teal/magenta/purple/blue) */
-html[data-theme="vintage"]{
-  --bg:
+/* VINTAGE: 90s jukebox neon (teal/magenta/purple/blue) */
+html[data-theme="vintage"] body{
+  background:
     radial-gradient(circle at 18% 12%, rgba(0, 255, 240, 0.30) 0%, transparent 55%),
     radial-gradient(circle at 85% 20%, rgba(255, 0, 214, 0.28) 0%, transparent 58%),
     radial-gradient(circle at 55% 88%, rgba(123, 65, 255, 0.25) 0%, transparent 60%),
     radial-gradient(circle at 40% 55%, rgba(0, 140, 255, 0.20) 0%, transparent 62%),
     linear-gradient(135deg, #070018 0%, #0b0030 42%, #050012 100%) !important;
-
-  --card-bg: rgba(12, 8, 28, 0.72) !important;
-  --card-border: rgba(255,255,255,0.18) !important;
-  --shadow: 0 30px 110px rgba(0,0,0,0.80) !important;
-
-  --text: rgba(255,255,255,0.95) !important;
-  --text-soft: rgba(255,255,255,0.74) !important;
-
-  --accent: #00fff0 !important;      /* cyan */
-  --eq-bottom: #ff00d6 !important;   /* magenta */
-  --eq-top: rgba(255,255,255,0.08) !important;
-
-  --btn-bg: linear-gradient(180deg, rgba(255,255,255,0.13), rgba(255,255,255,0.06)) !important;
-  --btn-border: rgba(255,255,255,0.22) !important;
-  --btn-text: rgba(255,255,255,0.96) !important;
-
-  --wave-c1: rgba(0,255,240,0.34) !important;
-  --wave-c2: rgba(255,0,214,0.00) !important;
+}
+html[data-theme="vintage"] .frame{
+  background: rgba(12, 8, 28, 0.72) !important;
+  border-color: rgba(255,255,255,0.18) !important;
+  box-shadow: 0 30px 110px rgba(0,0,0,0.80) !important;
+}
+html[data-theme="vintage"] .pill-btn{
+  background: linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.06)) !important;
+  border-color: rgba(255,255,255,0.22) !important;
+  color: rgba(255,255,255,0.96) !important;
+}
+html[data-theme="vintage"] .eq-bar{
+  background: linear-gradient(to top, rgba(255,255,255,0.08), #ff00d6) !important;
+}
+html[data-theme="vintage"] .album-wave::before{
+  background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,255,240,0.34) 42%, rgba(0,0,0,0) 70%) !important;
 }
 
-/* TAPROOM: deep forest patio / cabin */
-html[data-theme="taproom"]{
-  --bg:
+/* TAPROOM: forest patio / cabin */
+html[data-theme="taproom"] body{
+  background:
     radial-gradient(circle at 20% 15%, rgba(120, 210, 155, 0.18) 0%, transparent 58%),
     radial-gradient(circle at 85% 22%, rgba(255, 196, 48, 0.16) 0%, transparent 60%),
-    radial-gradient(circle at 50% 90%, rgba(40, 90, 60, 0.22) 0%, transparent 62%),
+    radial-gradient(circle at 50% 92%, rgba(40, 90, 60, 0.22) 0%, transparent 62%),
     linear-gradient(135deg, #06110c 0%, #0b1b14 45%, #08100f 100%) !important;
-
-  --card-bg: rgba(16, 22, 18, 0.72) !important;
-  --card-border: rgba(244, 196, 48, 0.16) !important;
-  --shadow: 0 26px 90px rgba(0,0,0,0.70) !important;
-
-  --text: rgba(255,255,255,0.92) !important;
-  --text-soft: rgba(255,255,255,0.70) !important;
-
-  --accent: #76d39b !important;
-  --eq-bottom: #f4c430 !important;
-  --eq-top: rgba(255,255,255,0.08) !important;
-
-  --btn-bg: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.06)) !important;
-  --btn-border: rgba(255,255,255,0.14) !important;
-  --btn-text: rgba(255,255,255,0.94) !important;
-
-  --wave-c1: rgba(244,196,48,0.20) !important;
-  --wave-c2: rgba(118,211,155,0.00) !important;
+}
+html[data-theme="taproom"] .frame{
+  background: rgba(16, 22, 18, 0.72) !important;
+  border-color: rgba(244, 196, 48, 0.16) !important;
+  box-shadow: 0 26px 90px rgba(0,0,0,0.70) !important;
+}
+html[data-theme="taproom"] .pill-btn{
+  background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.06)) !important;
+  border-color: rgba(255,255,255,0.14) !important;
+  color: rgba(255,255,255,0.94) !important;
+}
+html[data-theme="taproom"] .eq-bar{
+  background: linear-gradient(to top, rgba(255,255,255,0.08), #f4c430) !important;
+}
+html[data-theme="taproom"] .album-wave::before{
+  background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(244,196,48,0.22) 50%, rgba(0,0,0,0) 78%) !important;
 }
 
   </style>
@@ -927,5 +923,6 @@ html[data-theme="taproom"]{
   </script>
 </body>
 </html>
+
 
 
