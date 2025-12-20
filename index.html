@@ -556,6 +556,14 @@
 
     /* ensure content sits above rails/ring */
     .frame > *{ position:relative; z-index: 2; }
+
+    #themeLabel{
+  max-width: 40vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
   </style>
 </head>
 
@@ -644,7 +652,7 @@
       document.documentElement.classList.toggle("force-portrait", needsRotation);
 
       // scale down a touch to avoid FireTV overscan clipping
-      document.documentElement.style.setProperty("--portrait-scale", needsRotation ? "0.96" : "1");
+      document.documentElement.style.setProperty("--portrait-scale", needsRotation ? "0.93" : "1");
     }
     window.addEventListener("resize", applyForcePortrait);
     window.addEventListener("orientationchange", applyForcePortrait);
@@ -1016,3 +1024,4 @@
   </script>
 </body>
 </html>
+
