@@ -29,20 +29,11 @@
       --btn-border: rgba(186, 152, 116, 0.9);
       --btn-text: #2b1b12;
 
-      --vinyl-opacity: 1;
-      --vinyl-base: rgba(0,0,0,0.92);
-      --vinyl-groove: rgba(255,255,255,0.10);
-      --vinyl-highlight: rgba(196, 122, 78, 0.22);
-      --vinyl-label:
-        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), transparent 55%),
-        radial-gradient(circle at center, rgba(196,122,78,0.30), rgba(0,0,0,0.15));
       --cover-shadow: 0 12px 28px rgba(60, 36, 20, 0.30);
 
-      /* stage safe area (this is the overscan fix) */
-      --safe-top: 18px;
-      --safe-right: 80px;
-      --safe-bottom: 60px;
-      --safe-left: 18px;
+      /* Overscan-safe INNER padding (symmetric so it stays centered) */
+      --safe-x: 28px;
+      --safe-y: 28px;
 
       /* album wave */
       --wave-c1: rgba(196,122,78,0.22);
@@ -80,7 +71,7 @@
         linear-gradient(135deg, #050014 0%, #09001f 35%, #04000e 100%);
 
       --card-bg: rgba(10, 6, 22, 0.70);
-      --card-border: rgba(255,255,255,0.12);
+      --card-border: rgba(255,255,255,0.14);
       --shadow: 0 26px 90px rgba(0,0,0,0.75);
 
       --text: rgba(255,255,255,0.94);
@@ -90,15 +81,9 @@
       --eq-bottom: #ff00d6;
       --eq-top: rgba(255,255,255,0.08);
 
-      --btn-bg: rgba(255,255,255,0.08);
+      --btn-bg: rgba(255,255,255,0.09);
       --btn-border: rgba(255,255,255,0.18);
       --btn-text: rgba(255,255,255,0.94);
-
-      --vinyl-groove: rgba(255,255,255,0.13);
-      --vinyl-highlight: rgba(0,255,240,0.18);
-      --vinyl-label:
-        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.16), transparent 55%),
-        linear-gradient(90deg, rgba(0,255,240,0.55), rgba(255,0,214,0.55));
 
       --cover-shadow: 0 20px 62px rgba(0,0,0,0.70);
       --wave-c1: rgba(0,255,240,0.30);
@@ -106,13 +91,13 @@
 
     html[data-theme="taproom"]{
       --bg:
-        radial-gradient(circle at 18% 12%, rgba(255, 196, 48, 0.18), transparent 55%),
+        radial-gradient(circle at 18% 12%, rgba(255, 196, 48, 0.16), transparent 55%),
         radial-gradient(circle at 82% 22%, rgba(76, 208, 182, 0.12), transparent 58%),
         radial-gradient(circle at 55% 90%, rgba(70, 140, 92, 0.18), transparent 62%),
         linear-gradient(135deg, #07130f 0%, #0b1b14 42%, #0a1110 100%);
 
       --card-bg: rgba(16, 22, 18, 0.70);
-      --card-border: rgba(244, 196, 48, 0.22);
+      --card-border: rgba(244, 196, 48, 0.18);
       --shadow: 0 26px 90px rgba(0,0,0,0.68);
 
       --text: rgba(255,255,255,0.92);
@@ -122,14 +107,9 @@
       --eq-bottom: #f4c430;
       --eq-top: rgba(255,255,255,0.08);
 
-      --btn-bg: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.05));
+      --btn-bg: linear-gradient(180deg, rgba(255,255,255,0.09), rgba(255,255,255,0.06));
       --btn-border: rgba(255,255,255,0.14);
       --btn-text: rgba(255,255,255,0.92);
-
-      --vinyl-highlight: rgba(118, 211, 155, 0.16);
-      --vinyl-label:
-        radial-gradient(circle at 35% 30%, rgba(255,255,255,0.14), transparent 55%),
-        radial-gradient(circle at center, rgba(244,196,48,0.42), rgba(0,0,0,0.18));
 
       --wave-c1: rgba(244,196,48,0.22);
     }
@@ -149,16 +129,10 @@
 
     /* =========================
        SILK PORTRAIT ENGINE (STABLE)
-       - NO scaling
-       - NO nudges
-       - Overscan handled by .stage padding
+       - No scaling
+       - No drifting nudges
        ========================= */
-    #viewport{
-      position: fixed;
-      inset: 0;
-      overflow: hidden;
-    }
-
+    #viewport{ position: fixed; inset: 0; overflow: hidden; }
     #app{
       position:absolute;
       top:50%;
@@ -168,47 +142,33 @@
       transform: translate(-50%, -50%);
       transform-origin:center;
     }
-
     html.force-portrait #app{
       width: 100vh;
       height: 100vw;
       transform: translate(-50%, -50%) rotate(-90deg);
     }
 
-    /* stage = safe area */
-    .stage{
-      width: 100%;
-      height: 100%;
-      padding:
-        var(--safe-top)
-        var(--safe-right)
-        var(--safe-bottom)
-        var(--safe-left);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-
     /* =========================
        FRAME LAYOUT
        ========================= */
     .frame{
-      width: min(1100px, 100%);
-      height: min(650px, 100%);
+      width: 100%;
+      height: 100%;
       background: var(--card-bg);
       border: 1px solid var(--card-border);
-      border-radius: var(--frame-radius);
       box-shadow: var(--shadow);
-      padding: 3vh 3vw;
+      border-radius: 0;           /* fill screen */
+      padding: calc(4vh + var(--safe-y)) calc(6vw + var(--safe-x));
       display:grid;
       grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
       grid-template-rows: auto 1fr auto;
-      gap: 2vh 3vw;
+      gap: 2.2vh 3vw;
       position:relative;
       overflow:hidden;
       backdrop-filter: blur(12px);
     }
 
+    /* Portrait: single column layout */
     .header{
       grid-column: 1 / -1;
       display:flex;
@@ -221,18 +181,17 @@
       font-size:0.88rem;
       color: var(--text-soft);
     }
-
     .header .mini{
       font-size:0.72rem;
       letter-spacing:0.22em;
       opacity:0.9;
       white-space:nowrap;
-      max-width: 44vw;
+      max-width: 70vw; /* avoid right clipping */
       overflow:hidden;
       text-overflow:ellipsis;
     }
 
-    /* Portrait: stack header so theme can NEVER be clipped on the right */
+    /* Always stack header on portrait to prevent “Theme:” clipping */
     html.force-portrait .header,
     @media (orientation: portrait){
       .header{
@@ -250,9 +209,9 @@
     }
 
     .album-art{
-      width: min(100%, 360px);
+      width: min(100%, 520px);
       aspect-ratio: 1 / 1;
-      border-radius: 26px;
+      border-radius: 30px;
       position:relative;
       overflow:hidden;
       display:grid;
@@ -261,67 +220,33 @@
       background: rgba(255,255,255,0.06);
     }
 
-    .vinyl{
-      position:absolute;
-      top:50%;
-      left:50%;
-      width: 94%;
-      height: 94%;
-      transform: translate(-50%, -50%);
-      border-radius:999px;
-      opacity: var(--vinyl-opacity);
-      pointer-events:none;
-      box-shadow: 0 18px 48px rgba(0,0,0,0.55);
-      background:
-        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.20) 0 2.2%, transparent 2.2% 100%),
-        radial-gradient(circle at 50% 50%, var(--vinyl-highlight) 0 9%, transparent 9% 100%),
-        radial-gradient(circle at 50% 50%, rgba(0,0,0,0.55) 0 13%, var(--vinyl-base) 28%, rgba(0,0,0,0.98) 100%),
-        repeating-radial-gradient(circle at 50% 50%, var(--vinyl-groove) 0 1px, rgba(255,255,255,0.00) 2px 7px);
-    }
-
-    .vinyl::after{
-      content:"";
-      position:absolute;
-      inset: 38%;
-      border-radius:999px;
-      background: var(--vinyl-label);
-      border: 1px solid rgba(255,255,255,0.12);
-      box-shadow: 0 0 12px rgba(0,0,0,0.25);
-    }
-
-    @keyframes spinDisc{
-      from { transform: translate(-50%, -50%) rotate(0deg); }
-      to   { transform: translate(-50%, -50%) rotate(360deg); }
-    }
-    .album-art.spinning .vinyl{ animation: spinDisc 2.8s linear infinite; }
-
     /* ===== Rotating shadow wave around cover (Silk-safe) ===== */
     .album-wave{
       position:absolute;
       top:50%;
       left:50%;
-      width: 78%;
-      height: 78%;
+      width: 84%;
+      height: 84%;
       transform: translate(-50%, -50%);
       border-radius: 18px;
       pointer-events:none;
-      z-index:1; /* above vinyl (default), below img (z=2) */
+      z-index:1;
       opacity: 0;
       filter: blur(0.6px);
     }
     .album-wave::before{
       content:"";
       position:absolute;
-      inset:-12px;
+      inset:-14px;
       border-radius: 22px;
       background: linear-gradient(90deg, var(--wave-c2) 0%, var(--wave-c1) 45%, var(--wave-c2) 72%, var(--wave-c2) 100%);
-      filter: blur(7px);
-      opacity: 0.95;
+      filter: blur(8px);
+      opacity: 0.92;
     }
     .album-wave::after{
       content:"";
       position:absolute;
-      inset:-16px;
+      inset:-18px;
       border-radius: 24px;
       background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.10) 50%, rgba(0,0,0,0) 100%);
       filter: blur(12px);
@@ -331,14 +256,14 @@
       from { transform: translate(-50%, -50%) rotate(0deg); }
       to   { transform: translate(-50%, -50%) rotate(360deg); }
     }
-    .album-art.spinning .album-wave{
+    .album-art.playing .album-wave{
       opacity: 0.55;
       animation: albumWaveSpin 6.0s linear infinite;
     }
 
     .album-art img#albumImg{
-      width: 74%;
-      height: 74%;
+      width: 78%;
+      height: 78%;
       object-fit: cover;
       border-radius: 18px;
       position:relative;
@@ -383,13 +308,13 @@
       color: var(--text-soft);
     }
     .track{
-      font-size: 2.2rem;
+      font-size: clamp(1.9rem, 4.4vw, 2.6rem);
       line-height: 1.12;
       font-weight: 700;
       color: var(--text);
       font-family:"DM Serif Display","Nunito",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
     }
-    .artist{ font-size: 1.3rem; color: var(--text-soft); }
+    .artist{ font-size: clamp(1.05rem, 3.1vw, 1.5rem); color: var(--text-soft); }
     .status{ font-size: 0.98rem; color: var(--text-soft); opacity: 0.95; }
 
     .controls{
@@ -400,8 +325,6 @@
       gap:1rem;
       margin-top:0.4rem;
     }
-
-    /* Portrait: center controls so logout is never pushed to the edge */
     html.force-portrait .controls,
     @media (orientation: portrait){
       .controls{
@@ -462,21 +385,11 @@
       opacity: 0.9;
     }
 
-    /* Portrait sizing */
-    html.force-portrait .frame,
-    @media (orientation: portrait){
-      .frame{
-        width: 100%;
-        height: 100%;
-        border-radius: 0;
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto 1fr auto;
-        gap: 2.2vh 0;
-        padding: 4vh 6vw;
-      }
-      .album-art{ width: min(74vw, 500px); border-radius: 30px; }
-      .track{ font-size: clamp(1.7rem, 4.2vw, 2.4rem); }
-      .artist{ font-size: clamp(1.05rem, 3.1vw, 1.45rem); }
+    /* Force single-column in portrait */
+    html.force-portrait .frame{
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto 1fr auto;
+      gap: 2.2vh 0;
     }
   </style>
 </head>
@@ -484,47 +397,44 @@
 <body>
   <div id="viewport">
     <div id="app">
-      <div class="stage">
-        <div class="frame">
-          <div class="header">
-            <div>Now Playing</div>
-            <div class="mini" id="themeLabel">Theme: Cozy</div>
-          </div>
+      <div class="frame">
+        <div class="header">
+          <div>Now Playing</div>
+          <div class="mini" id="themeLabel">Theme: Cozy</div>
+        </div>
 
-          <div class="album-art-wrapper">
-            <div class="album-art" id="albumArt">
-              <div class="vinyl" id="vinyl"></div>
-              <div class="album-wave" aria-hidden="true"></div>
-              <img id="albumImg" alt="" />
-              <div class="album-placeholder" id="albumPlaceholder">
-                <div>Nothing playing…</div>
-                <span>Start Spotify on any device</span>
-              </div>
+        <div class="album-art-wrapper">
+          <div class="album-art" id="albumArt">
+            <div class="album-wave" aria-hidden="true"></div>
+            <img id="albumImg" alt="" />
+            <div class="album-placeholder" id="albumPlaceholder">
+              <div>Nothing playing…</div>
+              <span>Start Spotify on any device</span>
             </div>
           </div>
+        </div>
 
-          <div class="meta">
-            <div class="label">Track</div>
-            <div class="track" id="trackName">—</div>
+        <div class="meta">
+          <div class="label">Track</div>
+          <div class="track" id="trackName">—</div>
 
-            <div class="label" style="margin-top: 0.75rem;">Artist</div>
-            <div class="artist" id="artistName">—</div>
+          <div class="label" style="margin-top: 0.75rem;">Artist</div>
+          <div class="artist" id="artistName">—</div>
 
-            <div class="status" id="statusText">Connect to Spotify and start playing music.</div>
+          <div class="status" id="statusText">Connect to Spotify and start playing music.</div>
+        </div>
+
+        <div class="controls">
+          <div class="btn-row">
+            <button class="pill-btn" id="loginButton"><span class="icon"></span><span>Login</span></button>
+            <button class="pill-btn" id="themeButton">Switch Theme</button>
+            <button class="pill-btn" id="logoutButton">Logout</button>
           </div>
 
-          <div class="controls">
-            <div class="btn-row">
-              <button class="pill-btn" id="loginButton"><span class="icon"></span><span>Login</span></button>
-              <button class="pill-btn" id="themeButton">Switch Theme</button>
-              <button class="pill-btn" id="logoutButton">Logout</button>
-            </div>
-
-            <div class="eq-bars" aria-hidden="true">
-              <div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div>
-              <div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div>
-              <div class="eq-bar"></div>
-            </div>
+          <div class="eq-bars" aria-hidden="true">
+            <div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div>
+            <div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div>
+            <div class="eq-bar"></div>
           </div>
         </div>
       </div>
@@ -540,7 +450,7 @@
     // ==== UI ====
     const loginButton = document.getElementById("loginButton");
     const logoutButton = document.getElementById("logoutButton");
-    const themeButton = document.getElementById("themeButton");
+    const themeButton  = document.getElementById("themeButton");
     const themeLabelEl = document.getElementById("themeLabel");
 
     const trackNameEl = document.getElementById("trackName");
@@ -563,9 +473,9 @@
 
     // ==== Theme switcher ====
     const THEMES = {
-      cozy: { label: "Cozy" },
-      vintage: { label: "Vintage Neon" },
-      taproom: { label: "Taproom" }
+      cozy:   { label: "Cozy" },
+      vintage:{ label: "Vintage Neon" },
+      taproom:{ label: "Taproom" }
     };
 
     function setTheme(themeKey, { persist = true } = {}) {
@@ -583,7 +493,7 @@
     }
 
     function toggleTheme(){
-      const order = ["cozy", "vintage", "taproom"];
+      const order = ["cozy","vintage","taproom"];
       const current = document.documentElement.dataset.theme || "cozy";
       const idx = order.indexOf(current);
       setTheme(order[(idx + 1) % order.length]);
@@ -807,10 +717,10 @@
       statusTextEl.textContent = isPlaying ? "Playing now on Spotify" : "Paused";
 
       if (isPlaying){
-        albumArtEl.classList.add("spinning");
+        albumArtEl.classList.add("playing");
         startEq();
       } else {
-        albumArtEl.classList.remove("spinning");
+        albumArtEl.classList.remove("playing");
         stopEq();
       }
     }
@@ -822,7 +732,7 @@
       albumImgEl.removeAttribute("src");
       albumImgEl.style.display = "none";
       statusTextEl.textContent = message || "No active playback.";
-      albumArtEl.classList.remove("spinning");
+      albumArtEl.classList.remove("playing");
       stopEq();
     }
 
