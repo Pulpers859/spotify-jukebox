@@ -388,6 +388,30 @@
       grid-template-rows: auto auto 1fr auto;
       gap: 2.2vh 0;
     }
+/* =========================
+   VINTAGE: thin neon pink border
+   ========================= */
+html[data-theme="vintage"] .frame{
+  border: 2px solid rgba(255, 0, 214, 0.78) !important; /* neon pink */
+  box-shadow:
+    0 0 10px rgba(255, 0, 214, 0.35),
+    0 0 28px rgba(255, 0, 214, 0.22),
+    var(--shadow) !important;
+}
+
+/* Optional: tiny inner glow line for extra “tube neon” feel */
+html[data-theme="vintage"] .frame::after{
+  /* if you already use .frame::after in another theme, delete this block */
+  content:"";
+  position:absolute;
+  inset: 10px;
+  border-radius: 0;            /* frame is full-screen; keep straight */
+  pointer-events:none;
+  border: 1px solid rgba(255, 0, 214, 0.22);
+  box-shadow: 0 0 18px rgba(255, 0, 214, 0.18);
+  opacity: 0.9;
+  z-index: 0;
+}
 
 
   </style>
@@ -948,6 +972,7 @@
   </script>
 </body>
 </html>
+
 
 
 
