@@ -635,6 +635,83 @@ html.force-portrait .header{
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+/* =========================================================
+   Replace vinyl with a rotating square “shadow plate”
+   ========================================================= */
+
+/* if any old vinyl CSS exists, this guarantees it never shows */
+.vinyl{ display:none !important; }
+
+/* tune these two to match your cover image sizing */
+:root{
+  --cover-size: 74%;     /* must match your albumImg width/height */
+  --cover-radius: 18px;  /* must match your albumImg border radius */
+}
+
+/* the rotating plate behind the album cover */
+.cover-rotor{
+  position:absolute;
+  top:50%;
+  left:50%;
+  width: var(--cover-size);
+  height: var(--cover-size);
+  border-radius: var(--cover-radius);
+  transform: translate(-50%, -50%) rotate(0deg);
+  transform-origin: center;
+  z-index: 1;
+  pointer-events: none;
+
+  /* looks like a moving shadow/halo when rotating */
+  background:
+    linear-gradient(135deg,
+      rgba(0,0,0,0.55) 0%,
+      rgba(0,0,0,0.10) 35%,
+      rgba(0,0,0,0.42) 68%,
+      rgba(0,0,0,0.18) 100%);
+
+  /* the “soft vinyl-like” shadow you liked */
+  box-shadow:
+    0 26px 70px rgba(0,0,0,0.55),
+    0 10px 28px rgba(0,0,0,0.35);
+
+  filter: blur(8px);
+  opacity: 0.85;
+}
+
+/* keep the album cover above it */
+.album-art img#albumImg{
+  position:relative;
+  z-index: 2;
+}
+
+/* spin only when playing (you already toggle .spinning in JS) */
+@keyframes spinCoverShadow{
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.album-art.spinning .cover-rotor{
+  animation: spinCoverShadow 3.4s linear infinite;
+}
+
+/* Optional: theme-aware tint (subtle) */
+html[data-theme="vintage"] .cover-rotor{
+  box-shadow:
+    0 26px 70px rgba(0,0,0,0.62),
+    0 0 26px rgba(0,255,240,0.10),
+    0 0 26px rgba(255,0,214,0.08);
+}
+
+html[data-theme="taproom"] .cover-rotor{
+  box-shadow:
+    0 26px 70px rgba(0,0,0,0.62),
+    0 0 20px rgba(244,196,48,0.10);
+}
+
+html[data-theme="cozy"] .cover-rotor{
+  opacity: 0.70;
+  filter: blur(9px);
+}
 
     
   </style>
@@ -654,7 +731,7 @@ html.force-portrait .header{
 
         <div class="album-art-wrapper">
           <div class="album-art" id="albumArt">
-            <div class="vinyl" id="vinyl"></div>
+            <div class="cover-rotor" aria-hidden="true"></div>
             <img id="albumImg" alt="" />
             <div class="album-placeholder" id="albumPlaceholder">
               <div>Nothing playing…</div>
@@ -1097,6 +1174,7 @@ html.force-portrait .header{
   </script>
 </body>
 </html>
+
 
 
 
