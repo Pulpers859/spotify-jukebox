@@ -388,135 +388,7 @@
       grid-template-rows: auto auto 1fr auto;
       gap: 2.2vh 0;
     }
-    /* =========================
-   THEME: CHRISTMAS (classic red/green/white)
-   - candy cane border
-   - drifting snowflakes (CSS only)
-   ========================= */
 
-html[data-theme="christmas"]{
-  --bg:
-    radial-gradient(circle at 18% 12%, rgba(255,255,255,0.10), transparent 55%),
-    radial-gradient(circle at 82% 22%, rgba(255, 72, 72, 0.16), transparent 58%),
-    radial-gradient(circle at 55% 90%, rgba(56, 200, 120, 0.16), transparent 62%),
-    linear-gradient(135deg, #0a2a1b 0%, #0b1b14 35%, #2a0b0b 100%);
-
-  --card-bg: rgba(255,255,255,0.10);
-  --card-border: rgba(255,255,255,0.20);
-  --shadow: 0 30px 110px rgba(0,0,0,0.70);
-
-  --text: rgba(255,255,255,0.95);
-  --text-soft: rgba(255,255,255,0.72);
-
-  --accent: #ff3b3b;      /* red */
-  --eq-bottom: #34d27b;   /* green */
-  --eq-top: rgba(255,255,255,0.10);
-
-  --btn-bg: linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0.08));
-  --btn-border: rgba(255,255,255,0.22);
-  --btn-text: rgba(255,255,255,0.96);
-
-  --cover-shadow: 0 26px 85px rgba(0,0,0,0.70);
-
-  /* wave glow: peppermint-y */
-  --wave-c1: rgba(255, 59, 59, 0.26);
-  --wave-c2: rgba(52, 210, 123, 0.00);
-}
-
-/* Candy cane border around the whole screen (safe, no layout shifts) */
-html[data-theme="christmas"] .frame{
-  position: relative;
-}
-
-/* outer stripe */
-html[data-theme="christmas"] .frame::before{
-  content:"";
-  position:absolute;
-  inset: 14px;
-  border-radius: 22px;
-  pointer-events:none;
-  background:
-    repeating-linear-gradient(
-      135deg,
-      rgba(255,255,255,0.95) 0px,
-      rgba(255,255,255,0.95) 10px,
-      rgba(255,59,59,0.95) 10px,
-      rgba(255,59,59,0.95) 20px
-    );
-  mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  padding: 6px;               /* stripe thickness */
-  box-sizing: border-box;
-  filter: drop-shadow(0 10px 24px rgba(0,0,0,0.30));
-  opacity: 0.95;
-}
-
-/* inner subtle green stripe */
-html[data-theme="christmas"] .frame::after{
-  content:"";
-  position:absolute;
-  inset: 26px;
-  border-radius: 18px;
-  pointer-events:none;
-  border: 2px solid rgba(52, 210, 123, 0.35);
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.12);
-  opacity: 0.9;
-}
-
-/* Snowflake layer (fixed to viewport, behind everything) */
-html[data-theme="christmas"] #viewport::before{
-  content:"";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.35;
-  background-image:
-    radial-gradient(circle, rgba(255,255,255,0.95) 0 1px, transparent 2px),
-    radial-gradient(circle, rgba(255,255,255,0.85) 0 1px, transparent 2px),
-    radial-gradient(circle, rgba(255,255,255,0.70) 0 1px, transparent 2px);
-  background-size:
-    120px 120px,
-    180px 180px,
-    260px 260px;
-  background-position:
-    0 0,
-    40px 90px,
-    120px 40px;
-  animation: snowfallDrift 18s linear infinite;
-}
-
-/* Ensure content stays above snow + border */
-html[data-theme="christmas"] .frame > *{
-  position: relative;
-  z-index: 1;
-}
-
-/* Slightly frosted look */
-html[data-theme="christmas"] .frame{
-  backdrop-filter: blur(14px);
-}
-
-/* snow drift animation */
-@keyframes snowfallDrift{
-  from { transform: translateY(-6%); }
-  to   { transform: translateY(6%); }
-}
-
-/* Make buttons feel a little “ornament glossy” on hover */
-html[data-theme="christmas"] .pill-btn:hover{
-  border-color: rgba(255,255,255,0.35);
-  box-shadow: 0 10px 24px rgba(0,0,0,0.28);
-}
-
-/* EQ: candy cane-ish */
-html[data-theme="christmas"] .eq-bar{
-  background: linear-gradient(to top, rgba(255,255,255,0.10), var(--eq-bottom));
-}
 
   </style>
 </head>
@@ -609,8 +481,7 @@ html[data-theme="christmas"] .eq-bar{
     const THEMES = {
       cozy:   { label: "Cozy" },
       vintage:{ label: "Vintage Neon" },
-      taproom:{ label: "Taproom" },
-      christmas:{label: "Christmas" }
+      taproom:{ label: "Taproom" }
     };
 
     function setTheme(themeKey, { persist = true } = {}) {
@@ -628,7 +499,7 @@ html[data-theme="christmas"] .eq-bar{
     }
 
     function toggleTheme(){
-      const order = ["cozy","vintage","taproom","christmas"];
+      const order = ["cozy","vintage","taproom"];
       const current = document.documentElement.dataset.theme || "cozy";
       const idx = order.indexOf(current);
       setTheme(order[(idx + 1) % order.length]);
@@ -1077,6 +948,7 @@ html[data-theme="christmas"] .eq-bar{
   </script>
 </body>
 </html>
+
 
 
 
