@@ -531,6 +531,7 @@ html[data-theme="taproom"] .album-wave::before{
           <div class="btn-row">
             <button class="pill-btn" id="loginButton"><span class="icon"></span><span>Login</span></button>
             <button class="pill-btn" id="themeButton">Switch Theme</button>
+            <button class="pill-btn" id="modeButton">Mode: Spotify</button>
             <button class="pill-btn" id="logoutButton">Logout</button>
           </div>
 
@@ -550,12 +551,17 @@ html[data-theme="taproom"] .album-wave::before{
     const REDIRECT_URI = window.location.origin + window.location.pathname;
     const SCOPES = ["user-read-playback-state", "user-read-currently-playing"];
 
+   // ===== SCROBBLE MODE (Last.fm) =====
+const LASTFM_USER = "funcleson";          // your Last.fm username
+const LASTFM_API_KEY = "529379aa6bef76cade9e86686d64e75f";  // <-- paste your Last.fm API key here
+
+    
     // ==== UI ====
     const loginButton = document.getElementById("loginButton");
     const logoutButton = document.getElementById("logoutButton");
     const themeButton  = document.getElementById("themeButton");
     const themeLabelEl = document.getElementById("themeLabel");
-
+const modeButton   = document.getElementById("modeButton");
     const trackNameEl = document.getElementById("trackName");
     const artistNameEl = document.getElementById("artistName");
     const statusTextEl = document.getElementById("statusText");
@@ -596,6 +602,26 @@ html[data-theme="taproom"] .album-wave::before{
     }
 
     function toggleTheme(){
+      // ===== MODE SWITCHER =====
+const MODES = ["Spotify", "Apple"];
+
+function getMode(){
+  return localStorage.getItem("jukebox_mode") || "spotify";
+}
+
+function setMode(mode){
+  const m = MODES.includes(mode) ? mode : "spotify";
+  localStorage.setItem("jukebox_mode", m);
+  modeButton.textContent = `Mode: ${m === "spotify" ? "Spotify" : "Apple"}`;
+  applyModeUI();
+  restartPollingForMode();
+}
+
+function toggleMode(){
+  const current = getMode();
+  setMode(current === "spotify" ? "scrobble" : "spotify");
+}
+
       const order = ["cozy","vintage","taproom"];
       const current = document.documentElement.dataset.theme || "cozy";
       const idx = order.indexOf(current);
@@ -788,6 +814,82 @@ html[data-theme="taproom"] .album-wave::before{
           showNothingPlaying("No active playback. Start Spotify on any device.");
           return;
         }
+// ===== SCROBBLE (Last.fm) HELPERS =====
+function encodeTerm(s){
+  return encodeURIComponent((s || "").trim());
+}
+
+async function fetchItunesArtwork(trackName, artistName){
+  try{
+    const term = `${trackName} ${artistName}`.trim();
+    const url = `https://itunes.apple.com/search?term=${encodeTerm(term)}&limit=1&media=music`;
+    const res = await fetch(url);
+    const data = await res.json();
+    const art = data?.results?.[0]?.artworkUrl100;
+    if (!art) return "";
+    return art.replace(/100x100/g, "600x600");
+  } catch {
+    return "";
+  }
+}
+
+async function fetchLastFmNowPlaying(){
+  const url =
+    `https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks` +
+    `&user=${encodeTerm(LASTFM_USER)}` +
+    `&api_key=${encodeTerm(LASTFM_API_KEY)}` +
+    `&limit=1&format=json`;
+
+  const res = await fetch(url);
+  const data = await res.json();
+
+  const track = data?.recenttracks?.track?.[0];
+  if (!track) return null;
+
+  const trackName = track?.name || "—";
+  const artistName = track?.artist?.["#text"] || "—";
+  const nowPlaying = track?.["@attr"]?.nowplaying === "true";
+
+  const lastfmImg =
+    track?.image?.slice?.(-1)?.[0]?.["#text"] ||
+    track?.image?.find?.(i => i.size === "extralarge")?.["#text"] ||
+    "";
+
+  const artworkUrl = lastfmImg || await fetchItunesArtwork(trackName, artistName);
+
+  return {
+    trackName,
+    artistName,
+    artworkUrl: artworkUrl || "",
+    isPlaying: nowPlaying,
+    status: nowPlaying ? "Apple Music" : "Last scrobble (may lag ~30–90s)"
+  };
+}
+function renderNowPlaying({ trackName, artistName, artworkUrl, isPlaying, status }){
+  trackNameEl.textContent = trackName || "—";
+  artistNameEl.textContent = artistName || "—";
+
+  if (artworkUrl){
+    albumImgEl.src = artworkUrl;
+    albumImgEl.alt = `${trackName} - ${artistName}`;
+    albumImgEl.style.display = "block";
+    albumPlaceholderEl.style.display = "none";
+  } else {
+    albumImgEl.removeAttribute("src");
+    albumImgEl.style.display = "none";
+    albumPlaceholderEl.style.display = "flex";
+  }
+
+  statusTextEl.textContent = status || (isPlaying ? "Playing" : "Paused");
+
+  if (isPlaying){
+    albumArtEl.classList.add("playing");
+    startEq();
+  } else {
+    albumArtEl.classList.remove("playing");
+    stopEq();
+  }
+}
 
         updateTrackUI(data);
       } catch (e){
@@ -796,28 +898,20 @@ html[data-theme="taproom"] .album-wave::before{
     }
 
     function updateTrackUI(data){
-      const track = data.item;
-      const isPlaying = !!data.is_playing;
+     const track = data.item;
+const isPlaying = !!data.is_playing;
 
-      const trackName = track?.name || "—";
-      const artists = (track?.artists || []).map(a => a.name).join(", ") || "—";
-      const bestImage = track?.album?.images?.[0];
+const trackName = track?.name || "—";
+const artists = (track?.artists || []).map(a => a.name).join(", ") || "—";
+const bestImage = track?.album?.images?.[0]?.url || "";
 
-      trackNameEl.textContent = trackName;
-      artistNameEl.textContent = artists;
-
-      if (bestImage?.url){
-        albumImgEl.src = bestImage.url;
-        albumImgEl.alt = `${trackName} - ${artists}`;
-        albumImgEl.style.display = "block";
-        albumPlaceholderEl.style.display = "none";
-      } else {
-        albumImgEl.removeAttribute("src");
-        albumImgEl.style.display = "none";
-        albumPlaceholderEl.style.display = "flex";
-      }
-
-      statusTextEl.textContent = isPlaying ? "Playing now on Spotify" : "Paused";
+renderNowPlaying({
+  trackName,
+  artistName: artists,
+  artworkUrl: bestImage,
+  isPlaying,
+  status: isPlaying ? "Playing now on Spotify" : "Paused"
+});
 
       if (isPlaying){
         albumArtEl.classList.add("playing");
@@ -862,6 +956,46 @@ html[data-theme="taproom"] .album-wave::before{
         pollInterval = null;
       }
     }
+function applyModeUI(){
+  const mode = getMode();
+  const isSpotify = mode === "spotify";
+
+  // Only show Spotify auth buttons in Spotify mode
+  loginButton.style.display = isSpotify ? "inline-flex" : "none";
+  logoutButton.style.display = isSpotify ? "inline-flex" : "none";
+}
+
+function restartPollingForMode(){
+  stopPolling();
+  stopEq();
+
+  const mode = getMode();
+
+  if (mode === "spotify"){
+    // Resume your Spotify polling (it will just show login if no token)
+    startPolling();
+    return;
+  }
+
+  // Scrobble mode
+  pollInterval = setInterval(async () => {
+    const info = await fetchLastFmNowPlaying();
+    if (!info){
+      showNothingPlaying("No recent scrobbles yet. Start Apple Music + scrobbler.");
+      return;
+    }
+    renderNowPlaying(info);
+  }, 7000);
+
+  (async () => {
+    const info = await fetchLastFmNowPlaying();
+    if (!info){
+      showNothingPlaying("No recent scrobbles yet. Start Apple Music + scrobbler.");
+      return;
+    }
+    renderNowPlaying(info);
+  })();
+}
 
     function setLoggedOutUI(message){
       loginButton.style.display = "inline-flex";
@@ -879,7 +1013,7 @@ html[data-theme="taproom"] .album-wave::before{
       initTheme();
 
       loginButton.addEventListener("click", loginWithSpotify);
-      themeButton.addEventListener("click", toggleTheme);
+      themeButton.addEventListener("click", toggleTheme); modeButton.addEventListener("click", toggleMode);
       logoutButton.addEventListener("click", () => {
         clearTokens();
         stopPolling();
@@ -917,12 +1051,12 @@ html[data-theme="taproom"] .album-wave::before{
         return;
       }
 
-      setLoggedInUI();
-      startPolling();
+      setMode(getMode());
     })();
   </script>
 </body>
 </html>
+
 
 
 
