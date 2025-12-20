@@ -564,6 +564,71 @@
   white-space: nowrap;
 }
 
+/* =========================================================
+   FIRE TV OVERSCAN SAFE AREA
+   (prevents right edge from being cut off)
+   ========================================================= */
+:root{
+  --safe-top: 16px;
+  --safe-right: 44px;  /* usually the problem edge */
+  --safe-bottom: 16px;
+  --safe-left: 16px;
+}
+
+/* Apply safe padding only when we are doing the Silk rotation */
+html.force-portrait .frame{
+  padding:
+    calc(4svh + var(--safe-top))
+    calc(6vw  + var(--safe-right))
+    calc(4svh + var(--safe-bottom))
+    calc(6vw  + var(--safe-left)) !important;
+}
+
+    /* =========================================================
+   PORTRAIT TUNING: smaller album/vinyl + slightly smaller type
+   (without shrinking the whole screen)
+   ========================================================= */
+
+html.force-portrait .album-art{
+  width: min(74vw, 500px) !important;
+}
+
+html.force-portrait .album-art img#albumImg{
+  width: 68% !important;
+  height: 68% !important;
+}
+
+html.force-portrait .vinyl{
+  width: 90% !important;
+  height: 90% !important;
+}
+
+html.force-portrait .track{
+  font-size: clamp(1.65rem, 4.2vw, 2.4rem) !important;
+}
+
+html.force-portrait .artist{
+  font-size: clamp(1.05rem, 3.1vw, 1.45rem) !important;
+}
+
+html.force-portrait .status{
+  font-size: 0.92rem !important;
+}
+
+/* Keep header from ever being cut off */
+html.force-portrait .header{
+  padding-right: 10px;
+}
+
+/* Make theme label never “eat” the logout button area */
+#themeLabel{
+  max-width: 36vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+    
   </style>
 </head>
 
@@ -652,7 +717,7 @@
       document.documentElement.classList.toggle("force-portrait", needsRotation);
 
       // scale down a touch to avoid FireTV overscan clipping
-      document.documentElement.style.setProperty("--portrait-scale", needsRotation ? "0.80" : "1");
+      document.documentElement.style.setProperty("--portrait-scale", needsRotation ? "0.93" : "1");
     }
     window.addEventListener("resize", applyForcePortrait);
     window.addEventListener("orientationchange", applyForcePortrait);
@@ -1024,5 +1089,6 @@
   </script>
 </body>
 </html>
+
 
 
